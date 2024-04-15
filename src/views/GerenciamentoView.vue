@@ -1,7 +1,3 @@
-<script setup>
-import BotaoOptionGerenView from '/src/components/BotaoOptionGerenView.vue'
-</script>
-
 <template>
    <h1 class="my-5">Escolha uma opção abaixo</h1>
 
@@ -20,9 +16,7 @@ import BotaoOptionGerenView from '/src/components/BotaoOptionGerenView.vue'
       </div>
    </div>
 
-   <div class="h-1 w-4/5 bg-orange-600 my-10">
-      <form action=""></form>
-   </div>
+   <div class="h-1 w-4/5 bg-orange-600 my-10"></div>
 
    <div id="r-tipo" class="option hidden"></div>
    <div id="r-produto" class="option hidden"></div>
@@ -32,16 +26,16 @@ import BotaoOptionGerenView from '/src/components/BotaoOptionGerenView.vue'
    <div id="d-produto" class="option hidden"></div>
 </template>
 
-<script>
-export default {
-   methods: {
-      exibirOption(optionId) {
-         const lili = document.getElementsByClassName("option");
-         for (let index = 0; index < lili.length; index++) {
-               lili.item(index).classList.add("hidden");
-         }
-         document.getElementById(optionId).classList.remove("hidden");
-      }
+<script setup>
+import BotaoOptionGerenView from '/src/components/BotaoOptionGerenView.vue'
+
+function exibirOption(optionId) {
+   const options = document.getElementsByClassName("option");
+   for (let index = 0; index < options.length; index++) {
+         options.item(index).classList.add("hidden");
    }
+   document.getElementById(optionId).classList.remove("hidden");
+
+   console.log(document.getElementById(optionId));
 }
 </script>
