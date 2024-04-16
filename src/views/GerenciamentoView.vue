@@ -1,5 +1,5 @@
 <template>
-   <h1 class="my-5">Escolha uma opção abaixo</h1>
+   <h2 class="my-5 text-lg text-orange-950">Escolha uma opção abaixo</h2>
 
    <div>
       <div class="flex flex-col md:flex-row w-fit h-fit">
@@ -18,7 +18,9 @@
 
    <div class="h-1 w-4/5 bg-orange-600 my-10"></div>
 
-   <div id="r-tipo" class="option hidden"></div>
+   <div id="r-tipo" class="option w-4/5 hidden">
+      <RegistrarTipoView />
+   </div>
    <div id="r-produto" class="option hidden"></div>
    <div id="a-tipo" class="option hidden"></div>
    <div id="a-produto" class="option hidden"></div>
@@ -28,6 +30,7 @@
 
 <script setup>
 import BotaoOptionGerenView from '/src/components/BotaoOptionGerenView.vue'
+import RegistrarTipoView from '../components/RegistrarTipoView.vue';
 
 function exibirOption(optionId) {
    const options = document.getElementsByClassName("option");
