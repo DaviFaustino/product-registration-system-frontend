@@ -37,8 +37,7 @@ function exibirOption(optionId) {
    for (let index = 0; index < options.length; index++) {
          options.item(index).classList.add("hidden");
    }
+   
    document.getElementById(optionId).classList.remove("hidden");
-
-   console.log(document.getElementById(optionId));
 }
 </script>
