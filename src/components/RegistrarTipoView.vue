@@ -23,11 +23,11 @@
             <div>
                 <label for="fatorEstoque" class="text-orange-600 font-bold">Fator Estoque Cheio: </label>
                 <select id="fatorEstoque"  class="bg-orange-600 border-2 border-orange-400 rounded-md h-7 w-12 text-center text-white">
-                    <option value="1">-1</option>
-                    <option value="2">-2</option>
-                    <option value="3">-3</option>
-                    <option value="4">-4</option>
-                    <option value="5">-5</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
                 </select>
             </div>
 
