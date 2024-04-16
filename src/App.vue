@@ -5,6 +5,8 @@
       </div>
 
       <nav class="my-1">
+         <RouterLink class="text-orange-950 text-lg hover:text-black" to="/">Home</RouterLink>
+         <span class="text-orange-950 text-lg"> | </span>
          <RouterLink class="text-orange-950 text-lg hover:text-black" to="/gerenciamento">Gerenciamento</RouterLink>
       </nav>
    </header>
@@ -12,4 +14,8 @@
    <main class="flex flex-col items-center justify-center w-full">
       <RouterView />
    </main>
+
+   <footer class="flex flex-col w-full items-center justify-center h-44 bg-orange-500 border-t-4 border-orange-400">
+      
+   </footer>
 </template>
