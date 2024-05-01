@@ -1,5 +1,6 @@
 <script setup>
 import BotaoOption from '../components/BotaoOptionView.vue';
+import BuscarTipoView from '../components/BuscarTipoView.vue'
 import { ref } from 'vue';
 
 const bProdutoAtivo = ref(true);
@@ -34,6 +35,7 @@ function exibirOption(optionId) {
 
    <div>
       <div id="busca-tipo" class="option hidden">
+         <BuscarTipoView />
       </div>
 
       <div id="busca-produto" class="option"></div>
