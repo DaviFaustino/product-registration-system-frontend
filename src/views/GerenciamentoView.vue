@@ -3,16 +3,16 @@
 
    <div>
       <div class="flex flex-col md:flex-row w-fit h-fit">
-         <BotaoOptionGerenView @clique="exibirOption" buttonText="Registrar Tipo" optionId="r-tipo"/>
-         <BotaoOptionGerenView @clique="exibirOption" buttonText="Registrar Produto" optionId="r-produto"/>
+         <BotaoOptionView @clique="exibirOption" buttonText="Registrar Tipo" optionId="r-tipo" class="botao-op"/>
+         <BotaoOptionView @clique="exibirOption" buttonText="Registrar Produto" optionId="r-produto" class="botao-op"/>
       </div>
       <div class="flex flex-col md:flex-row w-fit h-fit">
-         <BotaoOptionGerenView @clique="exibirOption" buttonText="Atualizar Tipo" optionId="a-tipo"/>
-         <BotaoOptionGerenView @clique="exibirOption" buttonText="Atualizar Produto" optionId="a-produto"/>
+         <BotaoOptionView @clique="exibirOption" buttonText="Atualizar Tipo" optionId="a-tipo" class="botao-op"/>
+         <BotaoOptionView @clique="exibirOption" buttonText="Atualizar Produto" optionId="a-produto" class="botao-op"/>
       </div>
       <div class="flex flex-col md:flex-row w-fit h-fit">
-         <BotaoOptionGerenView @clique="exibirOption" buttonText="Deletar Tipo" optionId="d-tipo"/>
-         <BotaoOptionGerenView @clique="exibirOption" buttonText="Deletar Produto" optionId="d-produto"/>
+         <BotaoOptionView @clique="exibirOption" buttonText="Deletar Tipo" optionId="d-tipo" class="botao-op"/>
+         <BotaoOptionView @clique="exibirOption" buttonText="Deletar Produto" optionId="d-produto" class="botao-op"/>
       </div>
    </div>
 
@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import BotaoOptionGerenView from '/src/components/BotaoOptionGerenView.vue'
+import BotaoOptionView from '/src/components/BotaoOptionView.vue'
 import RegistrarTipoView from '../components/RegistrarTipoView.vue';
 
 function exibirOption(optionId) {
@@ -41,3 +41,9 @@ function exibirOption(optionId) {
    document.getElementById(optionId).classList.remove("hidden");
 }
 </script>
+
+<style scoped>
+.botao-op {
+   @apply h-7 w-48 mr-1 mb-1 border-2 border-orange-400 bg-orange-300 hover:bg-orange-200 hover:border-orange-300 duration-100 text-orange-950 rounded-md;
+}
+</style>
