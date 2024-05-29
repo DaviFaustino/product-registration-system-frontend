@@ -21,7 +21,9 @@
    <div id="r-tipo" class="option w-4/5 hidden">
       <RegistrarTipoView />
    </div>
-   <div id="r-produto" class="option hidden"></div>
+   <div id="r-produto" class="option w-4/5 hidden">
+      <RegistrarProdutoView />
+   </div>
    <div id="a-tipo" class="option hidden"></div>
    <div id="a-produto" class="option hidden"></div>
    <div id="d-tipo" class="option hidden"></div>
