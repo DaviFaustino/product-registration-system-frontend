@@ -1,3 +1,18 @@
+<script setup>
+import BotaoOptionView from '/src/components/BotaoOptionView.vue'
+import RegistrarTipoView from '../components/RegistrarTipoView.vue';
+import RegistrarProdutoView from '../components/RegistrarProdutoView.vue'
+
+function exibirOption(optionId) {
+   const options = document.getElementsByClassName("option");
+   for (let index = 0; index < options.length; index++) {
+         options.item(index).classList.add("hidden");
+   }
+   
+   document.getElementById(optionId).classList.remove("hidden");
+}
+</script>
+
 <template>
    <h2 class="my-5 text-lg text-orange-950">Escolha uma opção abaixo</h2>
 
@@ -30,22 +45,8 @@
    <div id="d-produto" class="option hidden"></div>
 </template>
 
-<script setup>
-import BotaoOptionView from '/src/components/BotaoOptionView.vue'
-import RegistrarTipoView from '../components/RegistrarTipoView.vue';
-
-function exibirOption(optionId) {
-   const options = document.getElementsByClassName("option");
-   for (let index = 0; index < options.length; index++) {
-         options.item(index).classList.add("hidden");
-   }
-   
-   document.getElementById(optionId).classList.remove("hidden");
-}
-</script>
-
 <style scoped>
 .botao-op {
-   @apply h-7 w-48 mr-1 mb-1 border-2 border-orange-400 bg-orange-300 hover:bg-orange-200 hover:border-orange-300 duration-100 text-orange-950 rounded-md;
+   @apply h-7 w-48 mr-1 mb-1 border-2 border-orange-500 bg-orange-400 hover:bg-orange-500 hover:border-orange-600 duration-100 text-orange-950 rounded-md;
 }
 </style>
