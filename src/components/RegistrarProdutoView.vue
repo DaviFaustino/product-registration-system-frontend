@@ -4,12 +4,12 @@ import { ref, reactive, computed } from 'vue';
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
-let codigo;
+const codigo = ref(null);
 const tipoProduto = reactive({ nome: '' });
 const nome = ref('');
-let descricao;
+const descricao = ref('');
 let precos = reactive(['0,00', '0,00']);
-let tamanhoStringPrecosAnteriores = [3, 3];
+const tamanhoStringPrecosAnteriores = reactive([3, 3]);
 const estoqueCheio = ref('true');
 
 let nomesTipos = [];
@@ -24,7 +24,6 @@ function buscarTipos() {
    if (nomesTipos.length === 0) {      
       axios.get(backendURL + '/product-types/names')
       .then(response => {
-         console.log('Status: ', response.status);
          nomesTipos = response.data;
       })
       .catch(error => {
@@ -102,10 +101,10 @@ function editarCamposPreco(id) {
 
 function enviarFormulario() {
    const dados = {
-      code: codigo,
+      code: codigo.value,
       productTypeName: tipoProduto.nome,
       name: nome.value,
-      description: descricao,
+      description: descricao.value,
       purchasePriceInCents: parseInt(precos[0].replace(',', ''), 10),
       salePriceInCents: parseInt(precos[1].replace(',', ''), 10),
       fullStock: estoqueCheio.value
@@ -113,21 +112,24 @@ function enviarFormulario() {
 
    axios.post(backendURL + '/products', dados)
       .then(response => {
-         console.log('Resposta: ', response.data, 'Status: ', response.status);
+         console.log('Status: ', response.status);
          
-         codigo = '';
+         codigo.value = null;
          tipoProduto.nome = '';
          nome.value = '';
-         descricao = '';
+         descricao.value = '';
          precos[0] = '0,00';
          precos[1] = '0,00';
-         tamanhoStringPrecosAnteriores = [3, 3];
+         tamanhoStringPrecosAnteriores[0] = 3;
+         tamanhoStringPrecosAnteriores[1] = 3;
+         quantDigitosCompraVenda[0] = 0;
+         quantDigitosCompraVenda[1] = 0;
 
          mensagemResultado.value = 'Produto salvo!';
          corMensagem.value = 'text-green-500';
       })
       .catch(error => {
-         mensagemResultado.value = error.response.data;
+         mensagemResultado.value = error.data;
          corMensagem.value = 'text-red-600';
       })
 }
@@ -166,7 +168,7 @@ function enviarFormulario() {
 
          <div class="flex flex-col">
             <label for="descricao" class="text-orange-600 font-bold">Descrição </label>
-            <textarea id="descricao" cols="30" rows="4" v-model="descricao"
+            <textarea id="descricao" cols="30" rows="4" v-model="descricao.value"
                class="border-2 border-orange-400"></textarea>
          </div>
 
