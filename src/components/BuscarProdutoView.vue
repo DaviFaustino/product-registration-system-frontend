@@ -1,0 +1,169 @@
+<script setup>
+import axios from 'axios';
+import { ref, reactive, computed } from 'vue';
+
+const listaProdutos = reactive([]);
+const tipoProduto = reactive({ nome: '' });
+const produtoSelecionado = ref('');
+let busca = '';
+let nomesTipos = [];
+const mensagemResultado = ref('');
+const corMensagem = ref('');
+
+const backendURL = import.meta.env.VITE_BACKEND_URL;
+
+function buscarTipos() {
+
+   if (nomesTipos.length === 0) {      
+      axios.get(backendURL + '/product-types/names')
+      .then(response => {
+         nomesTipos = response.data;
+      })
+      .catch(error => {
+         console.error('Erro: ', error.response.data);
+      })
+   }
+}
+
+const mostrarTipos = computed(() => {
+   return (tipoProduto.nome.replace(/\s+/g, '') !== '' && document.activeElement.id === 'tipo-produto') ? true : false;
+});
+
+const tiposFiltrados = computed(() => {
+   let filtrados = [];
+
+   for (let i = 0; i < nomesTipos.length; i++) {
+      if (nomesTipos.at(i).toLowerCase().includes(tipoProduto.nome.toLowerCase())) {
+         filtrados.push(nomesTipos.at(i));
+      }
+   }
+   return filtrados;
+});
+
+function tipoSelecionado(tipo) {
+   tipoProduto.nome = tipo;
+}
+
+function realizarBuscaProduto() {
+
+   axios.get(backendURL + '/products?' + 'searchTerm=' + encodeURIComponent(busca) + ((tipoProduto.nome.replace(/\s+/g, '') !== '' && busca.replace(/\s+/g, '').match(/^[0-9]+$/g) === null) ? ('&' + 'productTypeName=' + encodeURIComponent(tipoProduto.nome)) : ''))
+      .then(response => {
+         listaProdutos.value = response.data;
+         mensagemResultado.value = informeResultados.value;
+         corMensagem.value = 'text-orange-600';
+      })
+      .catch(error => {
+         mensagemResultado.value = 'Erro: ' + error.response.data.message;
+         corMensagem.value = 'text-red-600';
+      });
+}
+
+function acaoBotaoProduto(name) {
+   if (produtoSelecionado.value !== name) {
+      produtoSelecionado.value = name;
+   } else {
+      produtoSelecionado.value = '';
+   }
+}
+
+const informeResultados = computed(() => { return listaProdutos.value.length + ' resultados encontrados' });
+
+</script>
+
+<template>
+   <div class="flex space-y-0 space-x-2">
+      <div class="flex flex-col space-y-1">
+         <input type="text" placeholder="Insira um código ou uma palavra" v-model="busca" class="w-64 h-8 border-2 border-orange-600" autocomplete="off"></input>
+         
+         <div class="relative">
+            <input type="text" id="tipo-produto" placeholder="Insira um tipo de produto" v-model="tipoProduto.nome" @focus="buscarTipos()" class="w-64 h-8 border-2 border-orange-600" autocomplete="off"></input>
+
+            <div v-if="mostrarTipos" class="absolute w-64 max-h-44 overflow-y-auto top-full bg-orange-700 bg-opacity-80 text-white">
+               <ul>
+                  <li v-for="tipo in tiposFiltrados" :key="tipo" :id="tipo">
+                     <button type="button" @click="tipoSelecionado(tipo)" class="w-full hover:bg-orange-800">{{ tipo }}</button>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </div>
+
+      <button type="button" class="h-8 w-10 bg-white border-2 border-orange-700 rounded-md">
+         <svg class="h-7 w-9" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <path d="M24 32C10.7 32 0 42.7 0 56V456c0 13.3 10.7 24 24 24H40c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24H24zm88 0c-8.8 0-16 7.2-16 16V464c0 8.8 7.2 16 16 16s16-7.2 16-16V48c0-8.8-7.2-16-16-16zm72 0c-13.3 0-24 10.7-24 24V456c0 13.3 10.7 24 24 24h16c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24H184zm96 0c-13.3 0-24 10.7-24 24V456c0 13.3 10.7 24 24 24h16c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24H280zM448 56V456c0 13.3 10.7 24 24 24h16c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24H472c-13.3 0-24 10.7-24 24zm-64-8V464c0 8.8 7.2 16 16 16s16-7.2 16-16V48c0-8.8-7.2-16-16-16s-16 7.2-16 16z"/>
+         </svg>
+      </button>
+
+      <div class="h-8 w-20 flex items-center justify-center">
+         <button type="button" @click="realizarBuscaProduto()" class="h-7 w-16 bg-orange-700 hover:h-8 hover:w-20 duration-200 rounded-lg text-center text-white font-bold">Buscar</button>
+      </div>
+   </div>
+
+   <div class="my-8 w-4/5">
+      <span class=" text-center text-lg break-words" :class="corMensagem">{{ mensagemResultado }}</span>
+   </div>
+
+   <div class="my-7">
+      <ul>
+         <li v-for="produto in listaProdutos.value" :key="produto.name" :id="produto.name" class="flex items-center w-96 my-1 p-1 border-2 rounded-md"
+            :class="[produtoSelecionado === produto.name ? 'bg-orange-500 border-orange-700' : 'bg-orange-400 border-orange-400']">
+            <button type="button" @click="acaoBotaoProduto(produto.name)" class="w-full">
+               <div class="flex flex-col w-full items-start">
+                  <span class="font-bold text-lg text-orange-950">{{ produto.name }}</span>
+
+                  <div class="flex">
+                     <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">*código: </span>
+                     <span class="text-orange-200" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">{{ produto.code }}</span>
+                  </div>
+
+                  <div class="flex">
+                     <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">*tipo: </span>
+                     <span class="text-orange-200" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">{{ produto.productTypeName }}</span>
+                  </div>
+
+                  <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">*descrição:</span>
+
+                  <div class="flex w-full justify-end"  :class="[(produtoSelecionado === produto.name) ? 'mb-3' : '']">
+                     <span class="w-80 text-left text-orange-200" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">{{ produto.description }}</span>
+                  </div>
+
+                  <div class="flex">
+                     <div class="w-48 flex flex-col items-start">
+                        <div class="flex">
+                           <span class="text-orange-950">*valor:</span>
+                           <span :class="[(produtoSelecionado === produto.name) ? 'text-orange-200' : 'text-orange-950']">R${{ produto.salePriceInCents / 100 }}</span>
+                        </div>
+
+                        <div class="flex">
+                           <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">*anterior: </span>
+                           <span class="text-orange-200" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">R${{ produto.previousSalePriceInCents / 100 }}</span>
+                        </div>
+                     </div>
+                     <div class="w-48 flex flex-col items-start">
+                        <div class="flex">
+                           <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">*compra: </span>
+                           <span class="text-orange-200" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">R${{ produto.purchasePriceInCents / 100 }}</span>
+                        </div>
+
+                        <div class="flex">
+                           <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">*com. anterior: </span>
+                           <span class="text-orange-200" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">R${{ produto.previousPurchasePriceInCents / 100 }}</span>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="flex flex-col items-start">
+                     <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">*ultima atualização: </span>
+                     <span class="text-orange-200" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">{{ new Date(produto.priceUpdateDate) }}</span>
+                  </div>
+
+                  <div class="flex">
+                     <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">*abastecido: </span>
+                     <span class="text-orange-200" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">{{ produto.fullStock }}</span>
+                  </div>
+               </div>
+            </button>
+         </li>
+      </ul>
+   </div>
+</template>
