@@ -1,16 +1,21 @@
 <script setup>
 import axios from 'axios';
 import { ref, reactive, computed } from 'vue';
+import LeitorCodigoBarraView from './LeitorCodigoBarraView.vue';
 
 const listaProdutos = reactive([]);
 const tipoProduto = reactive({ nome: '' });
 const produtoSelecionado = ref('');
-let busca = '';
+const busca = ref('');
 let nomesTipos = [];
 const mensagemResultado = ref('');
 const corMensagem = ref('');
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
+
+function atualizarBusca(novoCodigo) {
+   busca.value = novoCodigo;
+}
 
 function buscarTipos() {
 
@@ -71,11 +76,15 @@ const informeResultados = computed(() => { return listaProdutos.value.length + '
 </script>
 
 <template>
-   <div class="flex space-y-0 space-x-2">
+   <div class="flex space-x-2">
       <div class="flex flex-col space-y-1">
-         <input type="text" placeholder="Insira um código ou uma palavra" v-model="busca" class="w-64 h-8 border-2 border-orange-600" autocomplete="off"></input>
-         
-         <div class="relative">
+         <div class="flex space-x-1">
+            <input type="text" placeholder="Insira um código ou uma palavra" v-model="busca" class="w-64 h-8 border-2 border-orange-600" autocomplete="off"></input>
+
+            <LeitorCodigoBarraView @lido="atualizarBusca"/>
+         </div>
+
+         <div :class="[mostrarTipos ? 'relative':'']">
             <input type="text" id="tipo-produto" placeholder="Insira um tipo de produto" v-model="tipoProduto.nome" @focus="buscarTipos()" class="w-64 h-8 border-2 border-orange-600" autocomplete="off"></input>
 
             <div v-if="mostrarTipos" class="absolute w-64 max-h-44 overflow-y-auto top-full bg-orange-700 bg-opacity-80 text-white">
@@ -87,12 +96,6 @@ const informeResultados = computed(() => { return listaProdutos.value.length + '
             </div>
          </div>
       </div>
-
-      <button type="button" class="h-8 w-10 bg-white border-2 border-orange-700 rounded-md">
-         <svg class="h-7 w-9" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-            <path d="M24 32C10.7 32 0 42.7 0 56V456c0 13.3 10.7 24 24 24H40c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24H24zm88 0c-8.8 0-16 7.2-16 16V464c0 8.8 7.2 16 16 16s16-7.2 16-16V48c0-8.8-7.2-16-16-16zm72 0c-13.3 0-24 10.7-24 24V456c0 13.3 10.7 24 24 24h16c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24H184zm96 0c-13.3 0-24 10.7-24 24V456c0 13.3 10.7 24 24 24h16c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24H280zM448 56V456c0 13.3 10.7 24 24 24h16c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24H472c-13.3 0-24 10.7-24 24zm-64-8V464c0 8.8 7.2 16 16 16s16-7.2 16-16V48c0-8.8-7.2-16-16-16s-16 7.2-16 16z"/>
-         </svg>
-      </button>
 
       <div class="h-8 w-20 flex items-center justify-center">
          <button type="button" @click="realizarBuscaProduto()" class="h-7 w-16 bg-orange-700 hover:h-8 hover:w-20 duration-200 rounded-lg text-center text-white font-bold">Buscar</button>

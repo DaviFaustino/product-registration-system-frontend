@@ -1,6 +1,7 @@
 <script setup>
 import axios from 'axios';
 import { ref, reactive, computed } from 'vue';
+import LeitorCodigoBarraView from './LeitorCodigoBarraView.vue';
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -19,6 +20,10 @@ let quantDigitosCompraVenda = [0, 0];
 
 const mensagemResultado = ref('');
 const corMensagem = ref('');
+
+function atualizarCodigo(novoCodigo) {
+   codigo.value = novoCodigo;
+}
 
 function buscarTipos() {
    if (nomesTipos.length === 0) {      
@@ -140,15 +145,17 @@ function enviarFormulario() {
       <h2 class="text-lg w-40 text-center text-orange-800 font-bold border-y-2 border-orange-400">Registrar Produto</h2>
 
       <form @submit.prevent="enviarFormulario" class="mt-8 space-y-2" autocomplete="off">
-         <div>
+         <div class="flex items-center space-x-1">
             <label for="codigo" class="text-orange-600 font-bold">Código: </label>
             <input type="text" id="codigo" v-model="codigo" class="w-52 border-2 border-orange-400"></input>
+            
+            <LeitorCodigoBarraView @lido="atualizarCodigo"/>
          </div>
 
-         <div class="flex">
+         <div class="flex space-x-1">
             <label for="tipo-produto" class="text-orange-600 font-bold">Tipo de produto:</label>
 
-            <div class="relative">
+            <div :class="[mostrarTipos ? 'relative':'']">
                <input type="text" id="tipo-produto" v-model="tipoProduto.nome" @focus="buscarTipos" class="w-52 border-2 border-orange-400"></input>
 
                <div v-if="mostrarTipos" class="absolute w-52 max-h-44 overflow-y-auto top-full bg-orange-700 bg-opacity-80 text-white">
