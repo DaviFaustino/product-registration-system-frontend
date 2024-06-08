@@ -117,7 +117,6 @@ function enviarFormulario() {
 
    axios.post(backendURL + '/products', dados)
       .then(response => {
-         console.log('Status: ', response.status);
          
          codigo.value = null;
          tipoProduto.nome = '';
@@ -175,7 +174,7 @@ function enviarFormulario() {
 
          <div class="flex flex-col">
             <label for="descricao" class="text-orange-600 font-bold">Descrição </label>
-            <textarea id="descricao" cols="30" rows="4" v-model="descricao.value"
+            <textarea id="descricao" cols="30" rows="4" v-model="descricao"
                class="border-2 border-orange-400"></textarea>
          </div>
 
