@@ -1,7 +1,8 @@
 <script setup>
 import BotaoOptionView from '/src/components/BotaoOptionView.vue'
 import RegistrarTipoView from '../components/RegistrarTipoView.vue';
-import RegistrarProdutoView from '../components/RegistrarProdutoView.vue'
+import RegistrarProdutoView from '../components/RegistrarProdutoView.vue';
+import AtualizarTipoComp from '../components/AtualizarTipoComp.vue';
 
 function exibirOption(optionId) {
    const options = document.getElementsByClassName("option");
@@ -25,10 +26,6 @@ function exibirOption(optionId) {
          <BotaoOptionView @clique="exibirOption" buttonText="Atualizar Tipo" optionId="a-tipo" class="botao-op"/>
          <BotaoOptionView @clique="exibirOption" buttonText="Atualizar Produto" optionId="a-produto" class="botao-op"/>
       </div>
-      <div class="flex flex-col md:flex-row w-fit h-fit">
-         <BotaoOptionView @clique="exibirOption" buttonText="Deletar Tipo" optionId="d-tipo" class="botao-op"/>
-         <BotaoOptionView @clique="exibirOption" buttonText="Deletar Produto" optionId="d-produto" class="botao-op"/>
-      </div>
    </div>
 
    <div class="h-1 w-4/5 bg-orange-600 my-10"></div>
@@ -39,7 +36,9 @@ function exibirOption(optionId) {
    <div id="r-produto" class="option w-4/5 hidden">
       <RegistrarProdutoView />
    </div>
-   <div id="a-tipo" class="option hidden"></div>
+   <div id="a-tipo" class="option w-4/5 hidden">
+      <AtualizarTipoComp />
+   </div>
    <div id="a-produto" class="option hidden"></div>
    <div id="d-tipo" class="option hidden"></div>
    <div id="d-produto" class="option hidden"></div>
