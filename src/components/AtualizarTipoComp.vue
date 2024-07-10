@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios';
-import { ref, reactive, computed } from 'vue';
+import { ref, computed } from 'vue';
 import DeletarRegistroComp from './DeletarRegistroComp.vue';
 
 let nomesTipos = [];
@@ -58,10 +58,10 @@ function realizarBuscaTipo() {
          categoria.value = dadosTipo.category;
          fatorEstoque.value = dadosTipo.fullStockFactor;
 
-         const updateArea = document.getElementById('update-area');
+         const updateArea = document.getElementById('update-area-tipo');
          updateArea.classList.remove('opacity-20');
+         
          const elementos = updateArea.elements;
-
          for (let i = 0; i < elementos.length; i++) {
             elementos[i].disabled = false;
          }
@@ -101,7 +101,7 @@ function enviarFormulario() {
             nomesTipos = [];
             dadosTipo = null;
 
-            const updateArea = document.getElementById('update-area');
+            const updateArea = document.getElementById('update-area-tipo');
             updateArea.classList.add('opacity-20');
             const elementos = updateArea.elements;
 
@@ -139,7 +139,7 @@ function deletar() {
          categoria.value = null;
          fatorEstoque.value = null;
 
-         const updateArea = document.getElementById('update-area');
+         const updateArea = document.getElementById('update-area-tipo');
          updateArea.classList.add('opacity-20');
          const elementos = updateArea.elements;
 
@@ -161,7 +161,7 @@ function deletar() {
 
 <template>
    <div class="w-full flex flex-col items-center sm:border-x-2 border-orange-400">
-      <h2 class="text-lg w-40 text-center text-orange-800 font-bold border-y-2 border-orange-400">Registrar Tipo</h2>
+      <h2 class="text-lg w-40 text-center text-orange-800 font-bold border-y-2 border-orange-400">Atualizar Tipo</h2>
 
       <form @submit.prevent="realizarBuscaTipo" class="pt-8 flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2" autocomplete="off">
          <div :class="[mostrarTipos ? 'relative':'']">
@@ -183,7 +183,7 @@ function deletar() {
 
       <div class="h-0.5 w-96 bg-orange-400 mt-8 mb-2"></div>
 
-      <form @submit.prevent="enviarFormulario" id="update-area" class="mt-8 space-y-2 opacity-20" autocomplete="off">
+      <form @submit.prevent="enviarFormulario" id="update-area-tipo" class="mt-8 space-y-2 opacity-20" autocomplete="off">
          <div>
             <label for="nome" class="text-orange-600 font-bold">Nome: </label>
             <input type="text" id="nome" v-model="nome" class="w-52 border-2 border-orange-400" disabled="true"></input>
