@@ -68,18 +68,24 @@ function posicionarCursor(id) {
 function editarCamposPreco(id) {
    if(precos[id].match(/[^0-9]$/g) !== null) {
       precos[id] = precos[id].replace(/[^0-9]$/g, '');
+
+      if (precos[id].length === 0) {
+         reiniciarValoresPrecos(id);
+      }
       return false;
    }
 
    precos[id] = precos[id].replace(',', '');
    
-   if (quantDigitosCompraVenda[id] === 0 && (precos[id].match(/^[0]+$/g) || precos[id] === '')) {
-      precos[id] = '0,00';
+   if ((precos[id].match(/^[0]+$/g) || precos[id] === '')) {
+      reiniciarValoresPrecos(id);
       return false;
    }
    
    if (precos[id].length === 1) {
       precos[id] = precos[id].padStart(4, '0');
+      quantDigitosCompraVenda[id] = 0;
+      tamanhoStringPrecosAnteriores[id] = 0;
    }
 
    if (tamanhoStringPrecosAnteriores[id] < precos[id].length) {
@@ -103,6 +109,13 @@ function editarCamposPreco(id) {
    tamanhoStringPrecosAnteriores[id] = precos[id].length;
    precos[id] = precos[id].replace(precos[id], precos[id].substring(0, precos[id].length - 2) + ',' + precos[id].substring(precos[id].length - 2));
 }
+
+function reiniciarValoresPrecos(id) {
+   precos[id] = '0,00';
+   quantDigitosCompraVenda[id] = 0;
+   tamanhoStringPrecosAnteriores[id] = 3;
+}
+
 
 function enviarFormulario() {
    const dados = {
