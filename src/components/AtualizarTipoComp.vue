@@ -231,7 +231,8 @@ function deletar() {
       <div class="my-8 w-4/5 text-center text-lg break-words" :class="corMensagem">{{ mensagemResultado }}</div>
    </div>
 
-   <DeletarRegistroComp v-if="mostrarDeletar" @fechar="fecharConfirmarDelecao" @deletarRegistro="deletar"/>
+   <DeletarRegistroComp v-if="mostrarDeletar" @fechar="fecharConfirmarDelecao" @deletarRegistro="deletar"
+      labelText="Tem certeza que deseja deletar esse registro? Produtos relacionados a ele serão deletados também."/>
 
    <div class="h-1 w-full bg-orange-600 my-10"></div>
 </template>
