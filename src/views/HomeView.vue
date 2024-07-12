@@ -30,8 +30,8 @@ function exibirOption(optionId) {
    <div class="h-1 w-4/5 bg-orange-600 my-10"></div>
 
    <div class="mb-5 border-2 border-orange-700">
-      <BotaoOption @clique="exibirOption" buttonText="Buscar por Produto" optionId="busca-produto" :class="[ bProdutoAtivo ? 'botao-op-sel' : 'botao-op' ]"/>
-      <BotaoOption @clique="exibirOption" buttonText="Buscar por Tipo" optionId="busca-tipo" :class="[ bProdutoAtivo ? 'botao-op' : 'botao-op-sel' ]"/>
+      <BotaoOption @clique="exibirOption" buttonText="Buscar por Produto" optionId="busca-produto" class="h-7 w-48" :class="[ bProdutoAtivo ? 'bg-orange-700 text-white' : 'bg-orange-400 text-orange-950' ]"/>
+      <BotaoOption @clique="exibirOption" buttonText="Buscar por Tipo" optionId="busca-tipo" class="h-7 w-48" :class="[ bProdutoAtivo ? 'bg-orange-400 text-orange-950' : 'bg-orange-700 text-white' ]"/>
    </div>
 
    <div>
@@ -44,13 +44,3 @@ function exibirOption(optionId) {
       </div>
    </div>
 </template>
-
-<style scoped>
-.botao-op {
-   @apply h-7 w-48 bg-orange-400 text-orange-950;
-}
-
-.botao-op-sel {
-   @apply h-7 w-48 bg-orange-700 text-white;
-}
-</style>
