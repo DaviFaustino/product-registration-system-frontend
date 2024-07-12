@@ -29,10 +29,10 @@ function realizarBuscaTipo() {
 }
 
 function botaoTipo(name) {
-   const detalhesTipo = document.getElementById(name).getElementsByClassName('maisDetalhesTipo');
-   for (let i = 0; i < detalhesTipo.length; i++) {
+   if (tipoSelecionado.value !== name) {
       tipoSelecionado.value = name;
-      console.log(name);
+   } else {
+      tipoSelecionado.value = '';
    }
 }
 
@@ -40,7 +40,7 @@ function botaoTipo(name) {
 
 <template>
    <form @submit.prevent="realizarBuscaTipo" class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
-      <input type="text" id="nome" placeholder="Insira a busca" v-model="termoBusca" class="w-52 h-8 border-2 border-orange-600"></input>
+      <input type="text" id="nome" placeholder="Insira a busca" v-model="termoBusca" class="w-52 h-8 border-2 border-orange-600" autocomplete="off"></input>
 
       <select id="categorias" v-model="categoria"
          class="bg-orange-600 border-2 border-orange-600 rounded-md w-52 h-8 text-white">

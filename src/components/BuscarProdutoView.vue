@@ -8,6 +8,7 @@ const tipoProduto = reactive({ nome: '' });
 const produtoSelecionado = ref('');
 const busca = ref('');
 let nomesTipos = [];
+const estoqueCheio = ref('');
 const mensagemResultado = ref('');
 const corMensagem = ref('');
 
@@ -63,9 +64,11 @@ function realizarBuscaProduto() {
       });
 }
 
-function acaoBotaoProduto(name) {
-   if (produtoSelecionado.value !== name) {
-      produtoSelecionado.value = name;
+function acaoBotaoProduto(produto) {
+   if (produtoSelecionado.value !== produto.name) {
+      produtoSelecionado.value = produto.name;
+
+      estoqueCheio.value = produto.fullStock ? 'sim': 'não';
    } else {
       produtoSelecionado.value = '';
    }
@@ -73,6 +76,18 @@ function acaoBotaoProduto(name) {
 
 const informeResultados = computed(() => { return listaProdutos.value.length + ' resultados encontrados' });
 
+const formatDateTime = (timestamp) => {
+  const date = new Date(timestamp);
+  const options = { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric', 
+    hour: '2-digit', 
+    minute: '2-digit', 
+    second: '2-digit' 
+  };
+  return date.toLocaleDateString('pt-BR', options);
+};
 </script>
 
 <template>
@@ -110,21 +125,21 @@ const informeResultados = computed(() => { return listaProdutos.value.length + '
       <ul>
          <li v-for="produto in listaProdutos.value" :key="produto.name" :id="produto.name" class="flex items-center w-96 my-1 p-1 border-2 rounded-md"
             :class="[produtoSelecionado === produto.name ? 'bg-orange-500 border-orange-700' : 'bg-orange-400 border-orange-400']">
-            <button type="button" @click="acaoBotaoProduto(produto.name)" class="w-full">
+            <button type="button" @click="acaoBotaoProduto(produto)" class="w-full">
                <div class="flex flex-col w-full items-start">
                   <span class="font-bold text-lg text-orange-950">{{ produto.name }}</span>
 
                   <div class="flex">
-                     <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">*código: </span>
+                     <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">código: </span>
                      <span class="text-orange-200" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">{{ produto.code }}</span>
                   </div>
 
                   <div class="flex">
-                     <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">*tipo: </span>
+                     <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">tipo: </span>
                      <span class="text-orange-200" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">{{ produto.productTypeName }}</span>
                   </div>
 
-                  <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">*descrição:</span>
+                  <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">descrição:</span>
 
                   <div class="flex w-full justify-end"  :class="[(produtoSelecionado === produto.name) ? 'mb-3' : '']">
                      <span class="w-80 text-left text-orange-200" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">{{ produto.description }}</span>
@@ -133,36 +148,36 @@ const informeResultados = computed(() => { return listaProdutos.value.length + '
                   <div class="flex">
                      <div class="w-48 flex flex-col items-start">
                         <div class="flex">
-                           <span class="text-orange-950">*valor:</span>
+                           <span class="text-orange-950">venda:</span>
                            <span :class="[(produtoSelecionado === produto.name) ? 'text-orange-200' : 'text-orange-950']">R${{ produto.salePriceInCents / 100 }}</span>
                         </div>
 
                         <div class="flex">
-                           <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">*anterior: </span>
+                           <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">ve. anterior: </span>
                            <span class="text-orange-200" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">R${{ produto.previousSalePriceInCents / 100 }}</span>
                         </div>
                      </div>
                      <div class="w-48 flex flex-col items-start">
                         <div class="flex">
-                           <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">*compra: </span>
+                           <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">compra: </span>
                            <span class="text-orange-200" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">R${{ produto.purchasePriceInCents / 100 }}</span>
                         </div>
 
                         <div class="flex">
-                           <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">*com. anterior: </span>
+                           <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">co. anterior: </span>
                            <span class="text-orange-200" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">R${{ produto.previousPurchasePriceInCents / 100 }}</span>
                         </div>
                      </div>
                   </div>
 
                   <div class="flex flex-col items-start">
-                     <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">*ultima atualização: </span>
-                     <span class="text-orange-200" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">{{ new Date(produto.priceUpdateDate) }}</span>
+                     <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">ultima atualização: </span>
+                     <span class="text-orange-200" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">{{ formatDateTime(produto.priceUpdateDate) }}</span>
                   </div>
 
                   <div class="flex">
-                     <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">*abastecido: </span>
-                     <span class="text-orange-200" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">{{ produto.fullStock }}</span>
+                     <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">abastecido: </span>
+                     <span class="text-orange-200" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">{{ estoqueCheio }}</span>
                   </div>
                </div>
             </button>
