@@ -1,6 +1,7 @@
 <script setup>
 import axios from 'axios';
 import { ref, reactive, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import LeitorCodigoBarraView from './LeitorCodigoBarraView.vue';
 
 const listaProdutos = reactive([]);
@@ -88,6 +89,13 @@ const formatDateTime = (timestamp) => {
   };
   return date.toLocaleDateString('pt-BR', options);
 };
+
+const router = useRouter();
+
+function atualizarProduto(opcao, busca) {
+   busca = 
+   router.push({ name: 'Gerenciamento', params: { opcao, busca } });
+}
 </script>
 
 <template>

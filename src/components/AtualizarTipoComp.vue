@@ -1,6 +1,10 @@
 <script setup>
+const props = defineProps({
+    buscaTipo: String
+})
+
 import axios from 'axios';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import DeletarRegistroComp from './DeletarRegistroComp.vue';
 
 let nomesTipos = [];
@@ -157,6 +161,10 @@ function deletar() {
          corMensagem.value = 'text-red-600';
       });
 }
+
+onMounted(() => {
+   busca.value = props.buscaTipo;
+})
 </script>
 
 <template>

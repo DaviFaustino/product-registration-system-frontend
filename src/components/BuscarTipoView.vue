@@ -1,6 +1,7 @@
 <script setup>
 import axios from 'axios';
 import { ref, reactive } from 'vue';
+import { useRouter } from 'vue-router';
 
 const listaTipos = reactive([]);
 const categorias = new Map();
@@ -34,6 +35,12 @@ function botaoTipo(name) {
    } else {
       tipoSelecionado.value = '';
    }
+}
+
+const router = useRouter();
+
+function atualizarTipo(opcao, busca) {
+   router.push({ name: 'Gerenciamento', params: { opcao, busca } });
 }
 
 </script>

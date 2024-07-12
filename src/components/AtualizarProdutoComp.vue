@@ -1,6 +1,10 @@
 <script setup>
+const props = defineProps({
+    buscaProduto: String
+})
+
 import axios from 'axios';
-import { computed, reactive, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 import DeletarRegistroComp from './DeletarRegistroComp.vue';
 import LeitorCodigoBarraView from './LeitorCodigoBarraView.vue';
 
@@ -290,6 +294,10 @@ function deletar() {
          corMensagem.value = 'text-red-600';
       });
 }
+
+onMounted(() => {
+   busca.value = props.buscaProduto;
+})
 </script>
 
 <template>

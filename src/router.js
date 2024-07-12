@@ -5,7 +5,7 @@ import HomeView from './views/HomeView.vue'
 
 const routes = [
     { path: '/', component: HomeView},
-    { path: '/gerenciamento', component: GerenciamentoView}
+    { path: '/gerenciamento/:opcao?/:busca?', name: 'Gerenciamento', component: GerenciamentoView}
 ]
 
 const router = createRouter({

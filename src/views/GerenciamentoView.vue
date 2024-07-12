@@ -1,10 +1,11 @@
 <script setup>
-import BotaoOptionView from '/src/components/BotaoOptionView.vue'
-import RegistrarTipoView from '../components/RegistrarTipoView.vue';
-import RegistrarProdutoView from '../components/RegistrarProdutoView.vue';
-import AtualizarTipoComp from '../components/AtualizarTipoComp.vue';
+import { onMounted, onBeforeMount, ref } from 'vue';
+import { useRoute } from 'vue-router';
 import AtualizarProdutoComp from '../components/AtualizarProdutoComp.vue';
-import { ref } from 'vue';
+import AtualizarTipoComp from '../components/AtualizarTipoComp.vue';
+import RegistrarProdutoView from '../components/RegistrarProdutoView.vue';
+import RegistrarTipoView from '../components/RegistrarTipoView.vue';
+import BotaoOptionView from '/src/components/BotaoOptionView.vue';
 
 const mostrarRegistrarProduto = ref(true);
 
@@ -22,6 +23,26 @@ function exibirOption(optionId) {
    
    document.getElementById(optionId).classList.remove("hidden");
 }
+
+const route = useRoute();
+
+onMounted(() => {
+   if (route.params.opcao) {
+      exibirOption(route.params.opcao);
+   }
+});
+
+const buscaTipo = ref('');
+const buscaProduto = ref('');
+
+onBeforeMount(() => {
+   if (route.params.opcao === 'a-tipo') {
+      buscaTipo.value = route.params.busca;
+   }
+   if (route.params.opcao === 'a-produto') {
+      buscaProduto.value = route.params.busca
+   }
+})
 </script>
 
 <template>
@@ -51,9 +72,9 @@ function exibirOption(optionId) {
       <RegistrarProdutoView v-if="mostrarRegistrarProduto"/>
    </div>
    <div id="a-tipo" class="option w-4/5 hidden">
-      <AtualizarTipoComp />
+      <AtualizarTipoComp :buscaTipo="buscaTipo" />
    </div>
    <div id="a-produto" class="option w-4/5 hidden">
-      <AtualizarProdutoComp />
+      <AtualizarProdutoComp :buscaProduto="buscaProduto" />
    </div>
 </template>
