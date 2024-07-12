@@ -73,14 +73,16 @@ function atualizarTipo(opcao, busca) {
             :class="[tipoSelecionado === tipo.name ? 'bg-orange-500 border-orange-500' : 'bg-orange-400 border-orange-400']">
             <button type="button" @click="() => botaoTipo(tipo.name)" class="w-full">
                <div class="flex flex-col w-full items-start">
-                  <span class="font-bold text-lg text-orange-950">{{ tipo.name }}</span>
+                  <div class="flex">
+                     <span class="w-[19rem] text-left font-bold text-lg text-orange-950">{{ tipo.name }}</span>
+                     <button @click="atualizarTipo('a-tipo', tipo.name)" class="text-sm text-white bg-orange-600 w-16 h-7 rounded-lg hover:bg-orange-700 duration-150 border-2 border-orange-800" :class="[(tipoSelecionado === tipo.name) ? '' : 'hidden']">editar</button>
+                  </div>
+
                   <span class="text-orange-950">categoria: {{ categorias.get(tipo.category) }}</span>
                   <span class="maisDetalhesTipo text-orange-950" :class="[(tipoSelecionado === tipo.name) ? '' : 'hidden']">preço médio: {{ tipo.averagePriceInCents / 100 }} reais</span>
                   <span class="maisDetalhesTipo text-orange-950" :class="[(tipoSelecionado === tipo.name) ? '' : 'hidden']">fator de estoque: {{ tipo.fullStockFactor }}</span>
                </div>
             </button>
-            
-            <button @click="" class="text-sm text-orange-950 bg-orange-600 w-fit h-12 rounded-lg hover:bg-orange-700 duration-150 border-2 border-orange-800" :class="[(tipoSelecionado === tipo.name) ? '' : 'hidden']">buscar produtos</button>
          </li>
       </ul>
    </div>

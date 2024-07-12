@@ -135,7 +135,10 @@ function atualizarProduto(opcao, busca) {
             :class="[produtoSelecionado === produto.name ? 'bg-orange-500 border-orange-700' : 'bg-orange-400 border-orange-400']">
             <button type="button" @click="acaoBotaoProduto(produto)" class="w-full">
                <div class="flex flex-col w-full items-start">
-                  <span class="font-bold text-lg text-orange-950">{{ produto.name }}</span>
+                  <div class="flex">
+                     <span class="font-bold w-[19rem] text-left text-lg text-orange-950">{{ produto.name }}</span>
+                     <button @click="atualizarProduto('a-produto', produto.code)" class="text-sm text-white bg-orange-600 w-16 h-7 rounded-lg hover:bg-orange-700 duration-150 border-2 border-orange-800" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">editar</button>
+                  </div>
 
                   <div class="flex">
                      <span class="text-orange-950" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">código: </span>
