@@ -50,6 +50,7 @@ function realizarBuscaProduto() {
       .then(response => {
 
          dadosProduto = response.data[0];
+         dadosProduto.code = dadosProduto.code.replace(/\s+/g, '');
          codigo.value = dadosProduto.code;
          tipoProduto.nome = dadosProduto.productTypeName;
          nome.value = dadosProduto.name;
@@ -296,7 +297,7 @@ function deletar() {
 }
 
 onMounted(() => {
-   busca.value = props.buscaProduto;
+   busca.value = props.buscaProduto.replace(/\s+/g, '');
 })
 </script>
 
