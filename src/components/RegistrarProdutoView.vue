@@ -11,6 +11,7 @@ const nome = ref('');
 const descricao = ref('');
 let precos = reactive(['0,00', '0,00']);
 const tamanhoStringPrecosAnteriores = reactive([3, 3]);
+const precoAntigo = ref('true');
 const estoqueCheio = ref('true');
 
 let nomesTipos = [];
@@ -128,7 +129,7 @@ function enviarFormulario() {
       fullStock: estoqueCheio.value
    }
 
-   axios.post(backendURL + '/products', dados)
+   axios.post(backendURL + '/products?' + 'isPriceOld=' + precoAntigo.value, dados)
       .then(response => {
          
          codigo.value = null;
@@ -199,6 +200,12 @@ function enviarFormulario() {
          <div>
             <label for="preco-venda" class="text-orange-600 font-bold">Preço de venda: </label>
             <input type="text" id="preco-venda" v-model="precos[1]" @click="posicionarCursor(1)" @input="editarCamposPreco(1)" class="w-32 border-2 border-orange-400 text-right"></input>
+         </div>
+
+         <div>
+            <label for="" class="text-orange-600 font-bold">O preço de venda é antigo? </label>
+            <input type="radio" v-model="precoAntigo" value="true">Sim</input>
+            <input type="radio" v-model="precoAntigo" value="false">Não</input>
          </div>
 
          <div>
