@@ -2,6 +2,7 @@
 import BotaoOption from '../components/BotaoOptionView.vue';
 import BuscarTipoView from '../components/BuscarTipoView.vue';
 import BuscarProdutoView from '../components/BuscarProdutoView.vue';
+import PrecosRecentesComp from '../components/PrecosRecentesComp.vue';
 import { ref } from 'vue';
 
 const bProdutoAtivo = ref(true);
@@ -26,6 +27,8 @@ function exibirOption(optionId) {
 <template>
    <h2 class="my-5 text-lg md:text-2xl text-orange-950">Bem-vindo ao sistema de registros do <br><strong>Point do
          Lanche</strong></h2>
+
+   <PrecosRecentesComp />
 
    <div class="h-1 w-4/5 bg-orange-600 my-10"></div>
 
