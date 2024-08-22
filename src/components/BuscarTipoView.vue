@@ -9,13 +9,13 @@ const tipoSelecionado = ref('');
 let termoBusca = '';
 let categoria = '';
 
-categorias.set("PANIFICAÇÃO", "Panificação");
-categorias.set("BOBONS_E_SALGADINHOS", "Bonbos e salgadinhos");
-categorias.set("BEBIDAS_E_LATICÍNIOS", "Bebidas e laticínios");
-categorias.set("ALIMENTOS_REVENDA", "Alimentos de revenda");
-categorias.set("LIMPEZA_E_HIGIENE", "Limpeza e higiene");
-categorias.set("MATÉRIA_PRIMA", "Matéria prima");
-categorias.set("OUTROS", "Outros");
+categorias.set("BAKING", "Panificação");
+categorias.set("CANDIES_AND_SNACKS", "Bonbos e salgadinhos");
+categorias.set("BEVERAGES_AND_DAIRY_PRODUCTS", "Bebidas e laticínios");
+categorias.set("FOOD_STAPLES_FOR_RESALE", "Alimentos de revenda");
+categorias.set("CLEANING_AND_HYGIENE", "Limpeza e higiene");
+categorias.set("RAW_MATERIALS", "Matéria prima");
+categorias.set("OTHERS", "Outros");
 
 function realizarBuscaTipo() {
    const backendURL = import.meta.env.VITE_BACKEND_URL
@@ -52,13 +52,13 @@ function atualizarTipo(opcao, busca) {
       <select id="categorias" v-model="categoria"
          class="bg-orange-600 border-2 border-orange-600 rounded-md w-52 h-8 text-white">
          <option value="" selected>sem categoria</option>
-         <option value="PANIFICAÇÃO">Panificação</option>
-         <option value="BOBONS_E_SALGADINHOS">Bobons e Salgadinhos</option>
-         <option value="BEBIDAS_E_LATICÍNIOS">Bebidas e Laticínios</option>
-         <option value="ALIMENTOS_REVENDA">Alimentos revenda</option>
-         <option value="LIMPEZA_E_HIGIENE">Limpeza e Higiene</option>
-         <option value="MATÉRIA_PRIMA">Matéria prima</option>
-         <option value="OUTROS">Outros</option>
+         <option value="BAKING">Panificação</option>
+         <option value="CANDIES_AND_SNACKS">Bobons e Salgadinhos</option>
+         <option value="BEVERAGES_AND_DAIRY_PRODUCTS">Bebidas e Laticínios</option>
+         <option value="FOOD_STAPLES_FOR_RESALE">Alimentos revenda</option>
+         <option value="CLEANING_AND_HYGIENE">Limpeza e Higiene</option>
+         <option value="RAW_MATERIALS">Matéria prima</option>
+         <option value="OTHERS">Outros</option>
       </select>
 
       <div class="h-8 w-20 flex items-center justify-center">

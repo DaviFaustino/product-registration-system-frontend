@@ -200,13 +200,13 @@ onMounted(() => {
          <div>
             <label for="categorias" class="text-orange-600 font-bold">Categoria: </label>
             <select id="categorias" v-model="categoria" class="bg-orange-600 border-2 border-orange-400 rounded-md h-7 text-white" disabled="true">
-               <option value="PANIFICAÇÃO">Panificação</option>
-               <option value="BOBONS_E_SALGADINHOS">Bobons e Salgadinhos</option>
-               <option value="BEBIDAS_E_LATICÍNIOS">Bebidas e Laticínios</option>
-               <option value="ALIMENTOS_REVENDA">Alimentos revenda</option>
-               <option value="LIMPEZA_E_HIGIENE">Limpeza e Higiene</option>
-               <option value="MATÉRIA_PRIMA">Matéria prima</option>
-               <option value="OUTROS">Outros</option>
+               <option value="BAKING">Panificação</option>
+               <option value="CANDIES_AND_SNACKS">Bobons e Salgadinhos</option>
+               <option value="BEVERAGES_AND_DAIRY_PRODUCTS">Bebidas e Laticínios</option>
+               <option value="FOOD_STAPLES_FOR_RESALE">Alimentos revenda</option>
+               <option value="CLEANING_AND_HYGIENE">Limpeza e Higiene</option>
+               <option value="RAW_MATERIALS">Matéria prima</option>
+               <option value="OTHERS">Outros</option>
             </select>
          </div>
 
