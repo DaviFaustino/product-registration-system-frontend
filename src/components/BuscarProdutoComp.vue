@@ -103,7 +103,7 @@ function atualizarProduto(opcao, busca) {
 </script>
 
 <template>
-   <div class="flex space-x-2">
+   <div class="flex flex-col sm:flex-row space-x-0 sm:space-x-2">
       <div class="flex flex-col space-y-1">
          <div class="flex space-x-1">
             <input type="text" placeholder="Insira um código ou uma palavra" v-model="busca" class="w-64 h-8 border-2 border-orange-600" autocomplete="off"></input>
@@ -124,16 +124,16 @@ function atualizarProduto(opcao, busca) {
          </div>
       </div>
 
-      <div class="h-8 w-20 flex items-center justify-center">
-         <button type="button" @click="realizarBuscaProduto()" class="h-7 w-16 bg-orange-700 hover:h-8 hover:w-20 duration-200 rounded-lg text-center text-white font-bold">Buscar</button>
+      <div class="h-8 w-20 pt-1 sm:pt-0">
+         <button type="button" @click="realizarBuscaProduto()" class="h-8 w-20 bg-orange-700 rounded-lg text-center text-white font-bold">Buscar</button>
       </div>
    </div>
 
-   <div class="my-8 w-4/5">
+   <div class="my-6 w-4/5">
       <span class=" text-center text-lg break-words" :class="corMensagem">{{ mensagemResultado }}</span>
    </div>
 
-   <div class="my-7">
+   <div class="mb-7">
       <ul>
          <li v-for="produto in listaProdutos.value" :key="produto.name" :id="produto.name" class="flex items-center w-96 my-1 p-1 border-2 rounded-md"
             :class="[produtoSelecionado === produto.name ? 'bg-orange-500 border-orange-700' : 'bg-orange-400 border-orange-400']">

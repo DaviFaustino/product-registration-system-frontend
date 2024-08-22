@@ -12,13 +12,6 @@ function exibirOption(optionId) {
       return;
    }
 
-   const options = document.getElementsByClassName("option");
-   for (let index = 0; index < options.length; index++) {
-         options.item(index).classList.add("hidden");
-   }
-   
-   document.getElementById(optionId).classList.remove("hidden");
-
    bProdutoAtivo.value = !bProdutoAtivo.value;
 }
 
@@ -33,16 +26,16 @@ function exibirOption(optionId) {
    <div class="h-1 w-4/5 bg-orange-600 my-10"></div>
 
    <div class="mb-5 border-2 border-orange-700">
-      <BotaoOption @clique="exibirOption" buttonText="Buscar por Produto" optionId="busca-produto" class="h-7 w-48" :class="[ bProdutoAtivo ? 'bg-orange-700 text-white' : 'bg-orange-400 text-orange-950' ]"/>
-      <BotaoOption @clique="exibirOption" buttonText="Buscar por Tipo" optionId="busca-tipo" class="h-7 w-48" :class="[ bProdutoAtivo ? 'bg-orange-400 text-orange-950' : 'bg-orange-700 text-white' ]"/>
+      <BotaoOption @clique="exibirOption" buttonText="Buscar por Produto" optionId="busca-produto" class="h-7 w-40 sm:w-48" :class="[ bProdutoAtivo ? 'bg-orange-700 text-white' : 'bg-orange-400 text-orange-950' ]"/>
+      <BotaoOption @clique="exibirOption" buttonText="Buscar por Tipo" optionId="busca-tipo" class="h-7 w-40 sm:w-48" :class="[ bProdutoAtivo ? 'bg-orange-400 text-orange-950' : 'bg-orange-700 text-white' ]"/>
    </div>
 
    <div>
-      <div id="busca-tipo" class="option hidden">
+      <div v-if="bProdutoAtivo" id="busca-tipo" class="flex flex-col items-center">
          <BuscarTipoComp />
       </div>
 
-      <div id="busca-produto" class="option">
+      <div v-if="!bProdutoAtivo" id="busca-produto" class="flex flex-col items-center">
          <BuscarProdutoComp />
       </div>
    </div>

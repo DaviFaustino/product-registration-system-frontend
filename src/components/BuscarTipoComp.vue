@@ -62,8 +62,7 @@ function atualizarTipo(opcao, busca) {
       </select>
 
       <div class="h-8 w-20 flex items-center justify-center">
-         <button type="submit"
-            class="h-7 w-16 bg-orange-700 hover:h-8 hover:w-20 duration-200 rounded-lg text-center text-white font-bold">Buscar</button>
+         <button type="submit" class="h-8 w-20 bg-orange-700 rounded-lg text-center text-white font-bold">Buscar</button>
       </div>
    </form>
 
