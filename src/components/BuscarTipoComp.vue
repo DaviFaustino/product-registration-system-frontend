@@ -1,11 +1,13 @@
 <script setup>
 import axios from 'axios';
-import { ref, reactive } from 'vue';
+import { computed, ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
 const listaTipos = reactive([]);
 const categorias = new Map();
 const tipoSelecionado = ref('');
+const mensagemResultado = ref('');
+const corMensagem = ref('');
 let termoBusca = '';
 let categoria = '';
 
@@ -23,9 +25,12 @@ function realizarBuscaTipo() {
    axios.get(backendURL + '/v1/product-types?' + 'searchTerm=' + encodeURIComponent(termoBusca) + ((categoria != '') ? ('&' + 'category=' + encodeURIComponent(categoria)) : ''))
       .then(response => {
          listaTipos.value = response.data;
+         mensagemResultado.value = informeResultados.value;
+         corMensagem.value = 'text-orange-600';
       })
       .catch(error => {
          console.error('Erro: ', error)
+         corMensagem.value = 'text-red-600';
       });
 }
 
@@ -36,6 +41,8 @@ function botaoTipo(name) {
       tipoSelecionado.value = '';
    }
 }
+
+const informeResultados = computed(() => { return listaTipos.value.length + ' resultados encontrados' });
 
 const router = useRouter();
 
@@ -66,7 +73,11 @@ function atualizarTipo(opcao, busca) {
       </div>
    </form>
 
-   <div class="my-7">
+   <div class="my-6 w-4/5">
+      <span class=" text-center text-lg break-words" :class="corMensagem">{{ mensagemResultado }}</span>
+   </div>
+
+   <div class="mb-7">
       <ul>
          <li v-for="tipo in listaTipos.value" :key="tipo.name" :id="tipo.name" class="flex items-center w-96 my-1 p-1 border-2 rounded-md"
             :class="[tipoSelecionado === tipo.name ? 'bg-orange-500 border-orange-500' : 'bg-orange-400 border-orange-400']">
