@@ -1,8 +1,8 @@
 <script setup>
 import axios from 'axios';
-import { ref, reactive, computed } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import LeitorCodigoBarraView from './LeitorCodigoBarraView.vue';
+import LeitorCodigoBarraComp from './LeitorCodigoBarraComp.vue';
 
 const listaProdutos = reactive([]);
 const tipoProduto = reactive({ nome: '' });
@@ -108,7 +108,7 @@ function atualizarProduto(opcao, busca) {
          <div class="flex space-x-1">
             <input type="text" placeholder="Insira um código ou uma palavra" v-model="busca" class="w-64 h-8 border-2 border-orange-600" autocomplete="off"></input>
 
-            <LeitorCodigoBarraView @lido="atualizarBusca"/>
+            <LeitorCodigoBarraComp @lido="atualizarBusca"/>
          </div>
 
          <div :class="[mostrarTipos ? 'relative':'']">

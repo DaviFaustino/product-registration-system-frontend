@@ -3,9 +3,9 @@ import { onMounted, onBeforeMount, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import AtualizarProdutoComp from '../components/AtualizarProdutoComp.vue';
 import AtualizarTipoComp from '../components/AtualizarTipoComp.vue';
-import RegistrarProdutoView from '../components/RegistrarProdutoView.vue';
-import RegistrarTipoView from '../components/RegistrarTipoView.vue';
-import BotaoOptionView from '/src/components/BotaoOptionView.vue';
+import RegistrarProdutoComp from '../components/RegistrarProdutoComp.vue';
+import RegistrarTipoComp from '../components/RegistrarTipoComp.vue';
+import BotaoOptionComp from '/src/components/BotaoOptionComp.vue';
 
 const mostrarRegistrarProduto = ref(true);
 
@@ -50,15 +50,15 @@ onBeforeMount(() => {
 
    <div>
       <div class="flex flex-col md:flex-row w-fit h-fit">
-         <BotaoOptionView @clique="exibirOption" buttonText="Registrar Tipo" optionId="r-tipo"
+         <BotaoOptionComp @clique="exibirOption" buttonText="Registrar Tipo" optionId="r-tipo"
                class="h-7 w-48 mr-1 mb-1 border-2 border-orange-500 bg-orange-400 hover:bg-orange-500 hover:border-orange-600 duration-100 text-orange-950 rounded-md"/>
-         <BotaoOptionView @clique="exibirOption" buttonText="Registrar Produto" optionId="r-produto"
+         <BotaoOptionComp @clique="exibirOption" buttonText="Registrar Produto" optionId="r-produto"
                class="h-7 w-48 mr-1 mb-1 border-2 border-orange-500 bg-orange-400 hover:bg-orange-500 hover:border-orange-600 duration-100 text-orange-950 rounded-md"/>
       </div>
       <div class="flex flex-col md:flex-row w-fit h-fit">
-         <BotaoOptionView @clique="exibirOption" buttonText="Atualizar Tipo" optionId="a-tipo"
+         <BotaoOptionComp @clique="exibirOption" buttonText="Atualizar Tipo" optionId="a-tipo"
                class="h-7 w-48 mr-1 mb-1 border-2 border-orange-500 bg-orange-400 hover:bg-orange-500 hover:border-orange-600 duration-100 text-orange-950 rounded-md"/>
-         <BotaoOptionView @clique="exibirOption" buttonText="Atualizar Produto" optionId="a-produto"
+         <BotaoOptionComp @clique="exibirOption" buttonText="Atualizar Produto" optionId="a-produto"
                class="h-7 w-48 mr-1 mb-1 border-2 border-orange-500 bg-orange-400 hover:bg-orange-500 hover:border-orange-600 duration-100 text-orange-950 rounded-md"/>
       </div>
    </div>
@@ -66,10 +66,10 @@ onBeforeMount(() => {
    <div class="h-1 w-4/5 bg-orange-600 my-10"></div>
 
    <div id="r-tipo" class="option w-4/5 hidden">
-      <RegistrarTipoView />
+      <RegistrarTipoComp />
    </div>
    <div id="r-produto" class="option w-4/5 hidden">
-      <RegistrarProdutoView v-if="mostrarRegistrarProduto"/>
+      <RegistrarProdutoComp v-if="mostrarRegistrarProduto"/>
    </div>
    <div id="a-tipo" class="option w-4/5 hidden">
       <AtualizarTipoComp :buscaTipo="buscaTipo" />

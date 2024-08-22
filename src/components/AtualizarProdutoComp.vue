@@ -6,7 +6,7 @@ const props = defineProps({
 import axios from 'axios';
 import { computed, onMounted, reactive, ref } from 'vue';
 import DeletarRegistroComp from './DeletarRegistroComp.vue';
-import LeitorCodigoBarraView from './LeitorCodigoBarraView.vue';
+import LeitorCodigoBarraComp from './LeitorCodigoBarraComp.vue';
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -310,7 +310,7 @@ onMounted(() => {
             <input type="text" id="busca-produto" v-model="busca" @click="funMostrarLeitorAtualiBusca(true)" class="w-64 h-8 border-2 border-orange-600"
                placeholder="Insira um código ou uma palavra"></input>
 
-            <LeitorCodigoBarraView v-if="mostrarLeitorAtualiBusca" @lido="atualizarBusca" />
+            <LeitorCodigoBarraComp v-if="mostrarLeitorAtualiBusca" @lido="atualizarBusca" />
          </div>
 
          <div class="h-8 w-20 flex items-center justify-center">
@@ -326,7 +326,7 @@ onMounted(() => {
             <input type="text" id="codigo" v-model="codigo" @click="funMostrarLeitorAtualiBusca(false)" class="w-52 border-2 border-orange-400" disabled="true"></input>
 
             <div :class="{ desabilitado: estaDesabilitado }">
-               <LeitorCodigoBarraView v-if="!mostrarLeitorAtualiBusca" @lido="atualizarCodigo" />
+               <LeitorCodigoBarraComp v-if="!mostrarLeitorAtualiBusca" @lido="atualizarCodigo" />
             </div>
          </div>
 

@@ -1,7 +1,7 @@
 <script setup>
 import axios from 'axios';
-import { ref, reactive, computed } from 'vue';
-import LeitorCodigoBarraView from './LeitorCodigoBarraView.vue';
+import { computed, reactive, ref } from 'vue';
+import LeitorCodigoBarraComp from './LeitorCodigoBarraComp.vue';
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -162,7 +162,7 @@ function enviarFormulario() {
             <label for="codigo" class="text-orange-600 font-bold">Código: </label>
             <input type="text" id="codigo" v-model="codigo" class="w-52 border-2 border-orange-400"></input>
             
-            <LeitorCodigoBarraView @lido="atualizarCodigo"/>
+            <LeitorCodigoBarraComp @lido="atualizarCodigo"/>
          </div>
 
          <div class="flex space-x-1">
