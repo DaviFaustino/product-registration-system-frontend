@@ -20,7 +20,7 @@ categorias.set("OTHERS", "Outros");
 function realizarBuscaTipo() {
    const backendURL = import.meta.env.VITE_BACKEND_URL
 
-   axios.get(backendURL + '/product-types?' + 'searchTerm=' + encodeURIComponent(termoBusca) + ((categoria != '') ? ('&' + 'category=' + encodeURIComponent(categoria)) : ''))
+   axios.get(backendURL + '/v1/product-types?' + 'searchTerm=' + encodeURIComponent(termoBusca) + ((categoria != '') ? ('&' + 'category=' + encodeURIComponent(categoria)) : ''))
       .then(response => {
          listaTipos.value = response.data;
       })

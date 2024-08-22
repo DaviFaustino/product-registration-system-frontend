@@ -3,7 +3,7 @@ import axios from 'axios'
 import { ref } from 'vue'
 
 const nome = ref(null)
-let categoria = 'PANIFICAÇÃO'
+let categoria = 'BAKING'
 let fatorEstoque = '1'
 
 function enviarFormulario() {
@@ -15,7 +15,7 @@ function enviarFormulario() {
 
     const backendURL = import.meta.env.VITE_BACKEND_URL
 
-    axios.post(backendURL + '/product-types', dados)
+    axios.post(backendURL + '/v1/product-types', dados)
         .then(response => {
             console.log('Resposta: ', response.data, 'Status: ', response.status)
             nome.value = null

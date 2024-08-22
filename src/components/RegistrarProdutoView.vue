@@ -28,7 +28,7 @@ function atualizarCodigo(novoCodigo) {
 
 function buscarTipos() {
    if (nomesTipos.length === 0) {      
-      axios.get(backendURL + '/product-types/names')
+      axios.get(backendURL + '/v1/product-types/names')
       .then(response => {
          nomesTipos = response.data;
       })
@@ -129,7 +129,7 @@ function enviarFormulario() {
       fullStock: estoqueCheio.value
    }
 
-   axios.post(backendURL + '/products?' + 'isPriceOld=' + precoAntigo.value, dados)
+   axios.post(backendURL + '/v1/products?' + 'isPriceOld=' + precoAntigo.value, dados)
       .then(response => {
          
          codigo.value = null;

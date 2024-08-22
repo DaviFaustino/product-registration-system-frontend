@@ -33,7 +33,7 @@ const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 function buscarPrecosRecentes() {
 
-   axios.get(backendURL + '/products/recent-price-updates?initialTime=' + (Date.now() - 1209600000).toString())
+   axios.get(backendURL + '/v1/products/recent-price-updates?initialTime=' + (Date.now() - 1209600000).toString())
       .then(response => {
          listaPrecosRecentes.value = response.data;
 

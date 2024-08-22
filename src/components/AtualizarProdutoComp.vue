@@ -46,7 +46,7 @@ function mudarDesabilitado(valor) {
 }
 
 function realizarBuscaProduto() {
-   axios.get(backendURL + '/products?' + 'searchTerm=' + encodeURIComponent(busca.value))
+   axios.get(backendURL + '/v1/products?' + 'searchTerm=' + encodeURIComponent(busca.value))
       .then(response => {
 
          dadosProduto = response.data[0];
@@ -90,7 +90,7 @@ function atualizarCodigo(novoCodigo) {
 
 function buscarTipos() {
    if (nomesTipos.length === 0) {
-      axios.get(backendURL + '/product-types/names')
+      axios.get(backendURL + '/v1/product-types/names')
          .then(response => {
             nomesTipos = response.data;
          })
@@ -232,7 +232,7 @@ function enviarFormulario() {
    }
 
    if (dados.length !== 0) {
-      axios.patch(backendURL + '/products?' + 'code=' + dadosProduto.code, Object.fromEntries(dados))
+      axios.patch(backendURL + '/v1/products?' + 'code=' + dadosProduto.code, Object.fromEntries(dados))
          .then(response => {
             dadosProduto = null;
 
@@ -263,7 +263,7 @@ function alterarMostrarDeletarRegistro(value) {
 }
 
 function deletar() {
-   axios.delete(backendURL + '/products?code=' + dadosProduto.code)
+   axios.delete(backendURL + '/v1/products?code=' + dadosProduto.code)
       .then(response => {
 
          codigo.value = null;

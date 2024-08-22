@@ -24,7 +24,7 @@ const mostrarDeletar = ref(false);
 
 function buscarTipos() {
    if (nomesTipos.length === 0) {
-      axios.get(backendURL + '/product-types/names')
+      axios.get(backendURL + '/v1/product-types/names')
          .then(response => {
             nomesTipos = response.data;
          })
@@ -55,7 +55,7 @@ function tipoSelecionado(tipo) {
 }
 
 function realizarBuscaTipo() {
-   axios.get(backendURL + '/product-types?' + 'searchTerm=' + encodeURIComponent(busca.value))
+   axios.get(backendURL + '/v1/product-types?' + 'searchTerm=' + encodeURIComponent(busca.value))
       .then(response => {
          dadosTipo = response.data[0];
          nome.value = dadosTipo.name;
@@ -100,7 +100,7 @@ function enviarFormulario() {
    }
 
    if (dados.length !== 0) {
-      axios.patch(backendURL + '/product-types/' + dadosTipo.name, Object.fromEntries(dados))
+      axios.patch(backendURL + '/v1/product-types/' + dadosTipo.name, Object.fromEntries(dados))
          .then(response => {
             nomesTipos = [];
             dadosTipo = null;
@@ -135,7 +135,7 @@ function fecharConfirmarDelecao() {
 }
 
 function deletar() {
-   axios.delete(backendURL + '/product-types/' + dadosTipo.name)
+   axios.delete(backendURL + '/v1/product-types/' + dadosTipo.name)
       .then(response => {
          nomesTipos = [];
          dadosTipo = null;

@@ -22,7 +22,7 @@ function atualizarBusca(novoCodigo) {
 function buscarTipos() {
 
    if (nomesTipos.length === 0) {      
-      axios.get(backendURL + '/product-types/names')
+      axios.get(backendURL + '/v1/product-types/names')
       .then(response => {
          nomesTipos = response.data;
       })
@@ -53,7 +53,7 @@ function tipoSelecionado(tipo) {
 
 function realizarBuscaProduto() {
 
-   axios.get(backendURL + '/products?' + 'searchTerm=' + encodeURIComponent(busca.value) + ((tipoProduto.nome.replace(/\s+/g, '') !== '' && busca.value.replace(/\s+/g, '').match(/^[0-9]+$/g) === null) ? ('&' + 'productTypeName=' + encodeURIComponent(tipoProduto.nome)) : ''))
+   axios.get(backendURL + '/v1/products?' + 'searchTerm=' + encodeURIComponent(busca.value) + ((tipoProduto.nome.replace(/\s+/g, '') !== '' && busca.value.replace(/\s+/g, '').match(/^[0-9]+$/g) === null) ? ('&' + 'productTypeName=' + encodeURIComponent(tipoProduto.nome)) : ''))
       .then(response => {
          listaProdutos.value = response.data;
          mensagemResultado.value = informeResultados.value;
