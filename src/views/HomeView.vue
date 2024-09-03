@@ -32,11 +32,11 @@ function exibirOption(optionId) {
 
    <div>
       <div v-if="bProdutoAtivo" id="busca-tipo" class="flex flex-col items-center">
-         <BuscarTipoComp />
+         <BuscarProdutoComp />
       </div>
 
       <div v-if="!bProdutoAtivo" id="busca-produto" class="flex flex-col items-center">
-         <BuscarProdutoComp />
+         <BuscarTipoComp />
       </div>
    </div>
 </template>
