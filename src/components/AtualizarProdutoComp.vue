@@ -318,7 +318,7 @@ onMounted(() => {
          </div>
       </form>
 
-      <div class="h-0.5 w-96 bg-orange-400 mt-8 mb-2"></div>
+      <div class="h-0.5 w-full sm:w-96 bg-orange-400 mt-8 mb-2"></div>
 
       <form @submit.prevent="enviarFormulario" id="update-area-produto" class="mt-8 space-y-2 opacity-20" autocomplete="off">
          <div class="flex items-center space-x-1">
@@ -334,7 +334,7 @@ onMounted(() => {
             <label for="tipo-produto" class="text-orange-600 font-bold">Tipo de produto:</label>
 
             <div :class="[mostrarTipos ? 'relative' : '']">
-               <input type="text" id="tipo-produto" v-model="tipoProduto.nome" @focus="buscarTipos" class="w-52 border-2 border-orange-400" disabled="true"></input>
+               <input type="text" id="tipo-produto" v-model="tipoProduto.nome" @focus="buscarTipos" class="w-[11.4rem] sm:w-52 border-2 border-orange-400" disabled="true"></input>
 
                <div v-if="mostrarTipos" class="absolute w-52 max-h-44 overflow-y-auto top-full bg-orange-700 bg-opacity-80 text-white">
                   <ul>
@@ -348,12 +348,12 @@ onMounted(() => {
 
          <div>
             <label for="nome" class="text-orange-600 font-bold">Nome: </label>
-            <input type="text" id="nome" v-model="nome" class="w-52 border-2 border-orange-400" disabled="true"></input>
+            <input type="text" id="nome" v-model="nome" class="w-[16.2rem] sm:w-[17.9rem] border-2 border-orange-400" disabled="true"></input>
          </div>
 
          <div class="flex flex-col">
             <label for="descricao" class="text-orange-600 font-bold">Descrição </label>
-            <textarea id="descricao" cols="30" rows="4" v-model="descricao" class="border-2 border-orange-400" disabled="true"></textarea>
+            <textarea id="descricao" cols="30" rows="4" v-model="descricao" class="w-[19.5rem] sm:w-[21.2rem] border-2 border-orange-400" disabled="true"></textarea>
          </div>
 
          <div>
@@ -375,13 +375,16 @@ onMounted(() => {
          </div>
 
          <div class="flex">
-            <button type="button" id="bt-restaurar-produto" disabled="true" @click="restaurar" class="h-7 w-7 mr-32 bg-orange-500 border-2 border-orange-600 hover:bg-orange-600 duration-150 rounded-lg mt-5 text-center text-white font-bold">
+            <button type="button" id="bt-restaurar-produto" disabled="true" @click="restaurar"
+               class="h-7 w-7 mr-28 sm:mr-32 bg-orange-500 border-2 border-orange-600 hover:bg-orange-600 duration-150 rounded-lg mt-5 text-center text-white font-bold">
+               
                <svg class="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
                   <path d="M463.5 224H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1c-87.5 87.5-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5z"/>
                </svg>
             </button>
 
-            <button type="button" disabled="true" @click="alterarMostrarDeletarRegistro(true)" class="h-7 w-20 mx-2 bg-red-500 border-2 border-red-600 hover:bg-red-600 duration-150 rounded-lg mt-5 text-center text-white font-bold">Deletar</button>
+            <button type="button" disabled="true" @click="alterarMostrarDeletarRegistro(true)"
+               class="h-7 w-20 mx-2 bg-red-500 border-2 border-red-600 hover:bg-red-600 duration-150 rounded-lg mt-5 text-center text-white font-bold">Deletar</button>
             
             <button type="submit" disabled="true"
                class="h-7 w-20 bg-orange-500 border-2 border-orange-600 hover:bg-orange-600 duration-150 rounded-lg mt-5 text-center text-white font-bold">Salvar</button>
