@@ -169,7 +169,7 @@ function enviarFormulario() {
             <label for="tipo-produto" class="text-orange-600 font-bold">Tipo de produto:</label>
 
             <div :class="[mostrarTipos ? 'relative':'']">
-               <input type="text" id="tipo-produto" v-model="tipoProduto.nome" @focus="buscarTipos" class="w-52 border-2 border-orange-400"></input>
+               <input type="text" id="tipo-produto" v-model="tipoProduto.nome" @focus="buscarTipos" class="w-[11.4rem] sm:w-52 border-2 border-orange-400"></input>
 
                <div v-if="mostrarTipos" class="absolute w-52 max-h-44 overflow-y-auto top-full bg-orange-700 bg-opacity-80 text-white">
                   <ul>
@@ -183,13 +183,13 @@ function enviarFormulario() {
 
          <div>
             <label for="nome" class="text-orange-600 font-bold">Nome: </label>
-            <input type="text" id="nome" v-model="nome" class="w-52 border-2 border-orange-400"></input>
+            <input type="text" id="nome" v-model="nome" class="w-[16.2rem] sm:w-[17.9rem] border-2 border-orange-400"></input>
          </div>
 
          <div class="flex flex-col">
             <label for="descricao" class="text-orange-600 font-bold">Descrição </label>
             <textarea id="descricao" cols="30" rows="4" v-model="descricao"
-               class="border-2 border-orange-400"></textarea>
+               class="w-[19.5rem] sm:w-[21.2rem] border-2 border-orange-400"></textarea>
          </div>
 
          <div>
