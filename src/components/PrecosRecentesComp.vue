@@ -109,26 +109,26 @@ onMounted(() => {
 </script>
 
 <template>
-   <div v-if="verPrecosRecentes" class="flex flex-col  h-24 justify-center">
+   <div v-if="verPrecosRecentes" class="flex flex-col sm:h-24 justify-center" :class="[listaPrecosRecentes.value.length <= 2 ? 'h-24':'h-48']">
       <div class="flex flex-col sm:flex-row sm:space-x-4">
-         <div class="flex w-52 md:w-64"
+         <div class="flex w-64 sm:w-52 md:w-64"
             :class="[precosRecentes[0].precoVenda > precosRecentes[0].precoVendaAnterior ? 'text-green-500' : 'text-red-600']">
             <span class="w-[13rem] break-words">{{ precosRecentes[0].nome }}</span>
             <span class="w-12 text-right"><strong>{{ editarValorRecente(0) }}</strong></span>
          </div>
-         <div class="flex w-52 md:w-64"
+         <div class="flex w-64 sm:w-52 md:w-64"
             :class="[precosRecentes[1].precoVenda > precosRecentes[1].precoVendaAnterior ? 'text-green-500' : 'text-red-600']">
             <span class="w-[13rem] break-words">{{ precosRecentes[1].nome }}</span>
             <span class="w-12 text-right"><strong>{{ editarValorRecente(1) }}</strong></span>
          </div>
       </div>
       <div class="flex flex-col sm:flex-row sm:space-x-4">
-         <div class="flex w-52 md:w-64"
+         <div class="flex w-64 sm:w-52 md:w-64"
             :class="[precosRecentes[2].precoVenda > precosRecentes[2].precoVendaAnterior ? 'text-green-500' : 'text-red-600']">
             <span class="w-[13rem] break-words">{{ precosRecentes[2].nome }}</span>
             <span class="w-12 text-right"><strong>{{ editarValorRecente(2) }}</strong></span>
          </div>
-         <div class="flex w-52 md:w-64"
+         <div class="flex w-64 sm:w-52 md:w-64"
             :class="[precosRecentes[3].precoVenda > precosRecentes[3].precoVendaAnterior ? 'text-green-500' : 'text-red-600']">
             <span class="w-[13rem] break-words">{{ precosRecentes[3].nome }}</span>
             <span class="w-12 text-right"><strong>{{ editarValorRecente(3) }}</strong></span>
