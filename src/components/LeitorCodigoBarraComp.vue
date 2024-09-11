@@ -35,7 +35,7 @@ function initLeitorCodigo() {
             codigoAnterior = data.codeResult.code;
          }
 
-         if (contadorCodigoCorreto >= 20) {
+         if (contadorCodigoCorreto >= 15) {
             contadorCodigoCorreto = 0;
             codigoAnterior = '';
 
