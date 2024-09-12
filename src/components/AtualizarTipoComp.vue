@@ -10,7 +10,7 @@ import DeletarRegistroComp from './DeletarRegistroComp.vue';
 let nomesTipos = [];
 const busca = ref('');
 let dadosTipo;
-const nome = ref(null);
+const nome = ref('');
 const categoria = ref(null);
 const fatorEstoque = ref(null);
 
@@ -20,7 +20,11 @@ const mensagemResultado = ref('');
 const corMensagem = ref('');
 
 const mostrarDeletar = ref(false);
+const habilitarMostrarRestricao = ref(false);
 
+const mostrarRestricaoTamanhoNomeTipo = computed(() => {
+   return (habilitarMostrarRestricao.value && (nome.value.length < 3 || nome.value.length > 32)) ? true : false;
+});
 
 function buscarTipos() {
    if (nomesTipos.length === 0) {
@@ -85,8 +89,12 @@ function restaurar() {
 }
 
 function enviarFormulario() {
-   let dados = [];
+   habilitarMostrarRestricao.value = true;
+   if (mostrarRestricaoTamanhoNomeTipo.value) {
+      return;
+   }
 
+   let dados = [];
    if (dadosTipo !== null) {
       if (nome.value !== dadosTipo.name && nome.value !== '') {
          dados.push(['name', nome.value]);
@@ -115,6 +123,8 @@ function enviarFormulario() {
 
             mensagemResultado.value = 'Tipo atualizado!';
             corMensagem.value = 'text-green-500';
+
+            habilitarMostrarRestricao.value = false;
          })
          .catch(error => {
             mensagemResultado.value = error.response.data.message;
@@ -193,8 +203,12 @@ onMounted(() => {
 
       <form @submit.prevent="enviarFormulario" id="update-area-tipo" class="mt-8 space-y-2 opacity-20" autocomplete="off">
          <div>
-            <label for="nome" class="text-orange-600 font-bold">Nome: </label>
-            <input type="text" id="nome" v-model="nome" class="w-52 border-2 border-orange-400" disabled="true"></input>
+            <div id="area-nome-tipo">
+               <label for="nome" class="text-orange-600 font-bold">Nome: </label>
+               <input type="text" id="nome" v-model="nome" class="w-52 border-2 border-orange-400" disabled="true"></input>
+            </div>
+
+            <label for="area-nome-tipo" v-if="mostrarRestricaoTamanhoNomeTipo" class="text-red-500 text-sm">*o nome precisa ter entre 3 e 32 caracteres!</label>
          </div>
 
          <div>
