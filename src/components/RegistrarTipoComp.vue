@@ -1,15 +1,25 @@
 <script setup>
 import axios from 'axios'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
-const nome = ref(null)
+const nome = ref('')
 let categoria = 'BAKING'
 let fatorEstoque = '1'
 
 const mensagemResultado = ref('');
 const corMensagem = ref('');
+const habilitarMostrarRestricao = ref(false);
+
+const mostrarRestricaoTamanhoNomeTipo = computed(() => {
+   return (habilitarMostrarRestricao.value && (nome.value.length < 3 || nome.value.length > 32)) ? true : false;
+});
 
 function enviarFormulario() {
+    habilitarMostrarRestricao.value = true;
+    if (mostrarRestricaoTamanhoNomeTipo.value) {
+        return;
+    }
+
     const dados = {
         name: nome.value,
         category: categoria,
@@ -21,10 +31,12 @@ function enviarFormulario() {
     axios.post(backendURL + '/v1/product-types', dados)
         .then(response => {
             console.log('Resposta: ', response.data, 'Status: ', response.status)
-            nome.value = null
+            nome.value = '';
 
             mensagemResultado.value = 'Produto salvo!';
             corMensagem.value = 'text-green-500';
+
+            habilitarMostrarRestricao.value = false;
         })
         .catch(error => {
             mensagemResultado.value = error.response.data.message;
@@ -39,8 +51,12 @@ function enviarFormulario() {
         
         <form @submit.prevent="enviarFormulario" class="mt-8 space-y-2" autocomplete="off">
             <div>
-                <label for="nome" class="text-orange-600 font-bold">Nome: </label>
-                <input type="text" id="nome" v-model="nome" class="w-52 border-2 border-orange-400"></input>
+                <div id="area-nome">
+                    <label for="nome" class="text-orange-600 font-bold">Nome: </label>
+                    <input type="text" id="nome" v-model="nome" class="w-52 border-2 border-orange-400"></input>
+                </div>
+                
+                <label for="area-nome" v-if="mostrarRestricaoTamanhoNomeTipo" class="text-red-500 text-sm">*o nome precisa ter entre 3 e 32 caracteres!</label>
             </div>
 
             <div>
