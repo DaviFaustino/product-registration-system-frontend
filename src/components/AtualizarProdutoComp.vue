@@ -79,7 +79,7 @@ function realizarBuscaProduto() {
          mostrarLeitorAtualiBusca.value = false;
       })
       .catch(error => {
-         mensagemResultado.value = error.data;
+         mensagemResultado.value = error.response.data.message;
          corMensagem.value = 'text-red-600';
       });
 }
@@ -249,7 +249,7 @@ function enviarFormulario() {
             corMensagem.value = 'text-green-500';
          })
          .catch(error => {
-            mensagemResultado.value = error.data;
+            mensagemResultado.value = error.response.data.message;
             corMensagem.value = 'text-red-600';
          });
    } else {
@@ -291,7 +291,7 @@ function deletar() {
          corMensagem.value = 'text-green-500';
       })
       .catch(error => {
-         mensagemResultado.value = error.data;
+         mensagemResultado.value = error.response.data.message;
          corMensagem.value = 'text-red-600';
       });
 }

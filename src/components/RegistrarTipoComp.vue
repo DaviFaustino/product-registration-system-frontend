@@ -27,7 +27,8 @@ function enviarFormulario() {
             corMensagem.value = 'text-green-500';
         })
         .catch(error => {
-            console.error('Erro: ', error)
+            mensagemResultado.value = error.response.data.message;
+            corMensagem.value = 'text-red-600';
         })
 }
 </script>
