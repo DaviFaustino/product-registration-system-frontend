@@ -6,6 +6,9 @@ const nome = ref(null)
 let categoria = 'BAKING'
 let fatorEstoque = '1'
 
+const mensagemResultado = ref('');
+const corMensagem = ref('');
+
 function enviarFormulario() {
     const dados = {
         name: nome.value,
@@ -19,6 +22,9 @@ function enviarFormulario() {
         .then(response => {
             console.log('Resposta: ', response.data, 'Status: ', response.status)
             nome.value = null
+
+            mensagemResultado.value = 'Produto salvo!';
+            corMensagem.value = 'text-green-500';
         })
         .catch(error => {
             console.error('Erro: ', error)
@@ -66,6 +72,8 @@ function enviarFormulario() {
                 <button type="submit" class="h-7 w-20 bg-orange-500 border-2 border-orange-600 hover:bg-orange-600 duration-150 rounded-lg mt-5 text-center text-white font-bold">Salvar</button>
             </div>
         </form>
+
+        <div class="my-8 w-4/5 text-center text-lg break-words" :class="corMensagem">{{ mensagemResultado }}</div>
     </div>
 
     <div class="h-1 w-full bg-orange-600 my-10"></div>
