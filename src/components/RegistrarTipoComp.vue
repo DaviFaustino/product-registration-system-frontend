@@ -36,7 +36,7 @@ function enviarFormulario() {
     <div class="w-full flex flex-col items-center border-x-2 border-orange-400">
         <h2 class="text-lg w-40 text-center text-orange-800 font-bold border-y-2 border-orange-400">Registrar Tipo</h2>
         
-        <form @submit.prevent="enviarFormulario" class="mt-8 space-y-2">
+        <form @submit.prevent="enviarFormulario" class="mt-8 space-y-2" autocomplete="off">
             <div>
                 <label for="nome" class="text-orange-600 font-bold">Nome: </label>
                 <input type="text" id="nome" v-model="nome" class="w-52 border-2 border-orange-400"></input>
