@@ -15,7 +15,7 @@ const mostrarLeitorAtualiBusca = ref(true);
 const estaDesabilitado = ref(true);
 let dadosProduto;
 
-const codigo = ref(null);
+const codigo = ref('');
 const tipoProduto = reactive({ nome: '' });
 const nome = ref('');
 const descricao = ref('');
@@ -32,6 +32,27 @@ const mensagemResultado = ref('');
 const corMensagem = ref('');
 
 const mostrarDeletarRegistro = ref(false);
+const habilitarMostrarRestricoes = ref(false);
+
+const mostrarRestricaoTamanhoCodigo = computed(() => {
+   return (habilitarMostrarRestricoes.value && (codigo.value.length < 4 || codigo.value.length > 13) && codigo.value != dadosProduto.code) ? true : false;
+});
+
+const mostrarRestricaoConteudoCodigo = computed(() => {
+   return habilitarMostrarRestricoes.value && codigo.value.match(/[^0-9]/g) ? true : false;
+});
+
+const mostrarRestricaoTamanhoTipoProduto = computed(() => {
+   return habilitarMostrarRestricoes.value && (tipoProduto.nome.length < 3 || tipoProduto.nome.length > 32) ? true : false;
+});
+
+const mostrarRestricaoTamanhoNome = computed(() => {
+   return (habilitarMostrarRestricoes.value && (nome.value.length < 3 || nome.value.length > 42)) ? true : false;
+});
+
+const mostrarRestricaoTamanhoDescricao = computed(() => {
+   return (habilitarMostrarRestricoes.value && (descricao.value.length > 256)) ? true : false;
+});
 
 function funMostrarLeitorAtualiBusca(mostrar) {
    mostrarLeitorAtualiBusca.value = mostrar;
@@ -200,6 +221,12 @@ function restaurar() {
 }
 
 function enviarFormulario() {
+   habilitarMostrarRestricoes.value = true;
+   if (mostrarRestricaoTamanhoCodigo.value || mostrarRestricaoConteudoCodigo.value || mostrarRestricaoTamanhoTipoProduto.value ||
+      mostrarRestricaoTamanhoNome.value || mostrarRestricaoTamanhoDescricao.value) {
+      return;
+   }
+
    let dados = [];
 
    if (dadosProduto !== null) {
@@ -247,6 +274,8 @@ function enviarFormulario() {
 
             mensagemResultado.value = 'Produto salvo!';
             corMensagem.value = 'text-green-500';
+
+            habilitarMostrarRestricoes.value = false;
          })
          .catch(error => {
             mensagemResultado.value = error.response.data.message;
@@ -321,39 +350,56 @@ onMounted(() => {
       <div class="h-0.5 w-full sm:w-96 bg-orange-400 mt-8 mb-2"></div>
 
       <form @submit.prevent="enviarFormulario" id="update-area-produto" class="mt-8 space-y-2 opacity-20" autocomplete="off">
-         <div class="flex items-center space-x-1">
-            <label for="codigo" class="text-orange-600 font-bold">Código: </label>
-            <input type="text" id="codigo" v-model="codigo" @click="funMostrarLeitorAtualiBusca(false)" class="w-52 border-2 border-orange-400" disabled="true"></input>
-
-            <div :class="{ desabilitado: estaDesabilitado }">
-               <LeitorCodigoBarraComp v-if="!mostrarLeitorAtualiBusca" @lido="atualizarCodigo" />
-            </div>
-         </div>
-
-         <div class="flex space-x-1">
-            <label for="tipo-produto" class="text-orange-600 font-bold">Tipo de produto:</label>
-
-            <div :class="[mostrarTipos ? 'relative' : '']">
-               <input type="text" id="tipo-produto" v-model="tipoProduto.nome" @focus="buscarTipos" class="w-[11.4rem] sm:w-52 border-2 border-orange-400" disabled="true"></input>
-
-               <div v-if="mostrarTipos" class="absolute w-52 max-h-44 overflow-y-auto top-full bg-orange-700 bg-opacity-80 text-white">
-                  <ul>
-                     <li v-for="tipo in tiposFiltrados" :key="tipo" :id="tipo">
-                        <button type="button" @click="tipoSelecionado(tipo)" class="w-full hover:bg-orange-800">{{ tipo }}</button>
-                     </li>
-                  </ul>
+         <div class="flex flex-col">
+            <div id="area-codigo" class="flex items-center space-x-1">
+               <label for="codigo" class="text-orange-600 font-bold">Código: </label>
+               <input type="text" id="codigo" v-model="codigo" @click="funMostrarLeitorAtualiBusca(false)" class="w-52 border-2 border-orange-400" disabled="true"></input>
+   
+               <div :class="{ desabilitado: estaDesabilitado }">
+                  <LeitorCodigoBarraComp v-if="!mostrarLeitorAtualiBusca" @lido="atualizarCodigo" />
                </div>
             </div>
+
+            <label for="area-codigo" v-if="mostrarRestricaoTamanhoCodigo" class="text-sm text-red-500">*o código precisa ter entre 4 e 13 dígitos ou deixe vazio</label>
+            <label for="area-codigo" v-if="mostrarRestricaoConteudoCodigo" class="text-sm text-red-500">*o código precisa ter apenas números</label>
          </div>
 
          <div>
-            <label for="nome" class="text-orange-600 font-bold">Nome: </label>
-            <input type="text" id="nome" v-model="nome" class="w-[16.2rem] sm:w-[17.9rem] border-2 border-orange-400" disabled="true"></input>
+            <div id="area-tipo-produto" class="flex space-x-1">
+               <label for="tipo-produto" class="text-orange-600 font-bold">Tipo de produto:</label>
+   
+               <div :class="[mostrarTipos ? 'relative' : '']">
+                  <input type="text" id="tipo-produto" v-model="tipoProduto.nome" @focus="buscarTipos" class="w-[11.4rem] sm:w-52 border-2 border-orange-400" disabled="true"></input>
+   
+                  <div v-if="mostrarTipos" class="absolute w-52 max-h-44 overflow-y-auto top-full bg-orange-700 bg-opacity-80 text-white">
+                     <ul>
+                        <li v-for="tipo in tiposFiltrados" :key="tipo" :id="tipo">
+                           <button type="button" @click="tipoSelecionado(tipo)" class="w-full hover:bg-orange-800">{{ tipo }}</button>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+
+            <label for="area-tipo-produto" v-if="mostrarRestricaoTamanhoTipoProduto" class="text-sm text-red-500">*o nome do tipo de produto precisa ter entre 3 e 32 caracteres</label>
          </div>
 
-         <div class="flex flex-col">
-            <label for="descricao" class="text-orange-600 font-bold">Descrição </label>
-            <textarea id="descricao" cols="30" rows="4" v-model="descricao" class="w-[19.5rem] sm:w-[21.2rem] border-2 border-orange-400" disabled="true"></textarea>
+         <div>
+            <div id="area-nome">
+               <label for="nome" class="text-orange-600 font-bold">Nome: </label>
+               <input type="text" id="nome" v-model="nome" class="w-[16.2rem] sm:w-[17.9rem] border-2 border-orange-400" disabled="true"></input>
+            </div>
+
+            <label for="area-nome" v-if="mostrarRestricaoTamanhoNome" class="text-sm text-red-500">*o nome do produto precisa ter entre 3 e 42 caracteres</label>
+         </div>
+
+         <div>
+            <div id="area-descricao" class="flex flex-col">
+               <label for="descricao" class="text-orange-600 font-bold">Descrição </label>
+               <textarea id="descricao" cols="30" rows="4" v-model="descricao" class="w-[19.5rem] sm:w-[21.2rem] border-2 border-orange-400" disabled="true"></textarea>
+            </div>
+
+            <label for="area-descricao" v-if="mostrarRestricaoTamanhoDescricao" class="text-sm text-red-500">*a descrição pode ter no máximo 256 caracteres</label>
          </div>
 
          <div>
