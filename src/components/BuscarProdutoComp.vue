@@ -142,7 +142,8 @@ function atualizarProduto(opcao, busca) {
                <div class="flex flex-col w-full items-start">
                   <div class="flex">
                      <span class="font-bold w-[19rem] text-left text-lg text-orange-950">{{ produto.name }}</span>
-                     <button @click="atualizarProduto('a-produto', produto.code)" class="text-sm text-white bg-orange-600 w-16 h-7 rounded-lg hover:bg-orange-700 duration-150 border-2 border-orange-800" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']">editar</button>
+                     <button @click="atualizarProduto('a-produto', produto.code)" :class="[(produtoSelecionado === produto.name) ? '' : 'hidden']"
+                              class="text-sm text-white bg-orange-600 w-16 h-7 rounded-lg hover:bg-orange-700 duration-150 border-2 border-orange-800">atualizar</button>
                   </div>
 
                   <div class="flex">

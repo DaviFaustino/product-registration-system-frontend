@@ -85,7 +85,8 @@ function atualizarTipo(opcao, busca) {
                <div class="flex flex-col w-full items-start">
                   <div class="flex">
                      <span class="w-[19rem] text-left font-bold text-lg text-orange-950">{{ tipo.name }}</span>
-                     <button @click="atualizarTipo('a-tipo', tipo.name)" class="text-sm text-white bg-orange-600 w-16 h-7 rounded-lg hover:bg-orange-700 duration-150 border-2 border-orange-800" :class="[(tipoSelecionado === tipo.name) ? '' : 'hidden']">editar</button>
+                     <button @click="atualizarTipo('a-tipo', tipo.name)" :class="[(tipoSelecionado === tipo.name) ? '' : 'hidden']"
+                              class="text-sm text-white bg-orange-600 w-16 h-7 rounded-lg hover:bg-orange-700 duration-150 border-2 border-orange-800">atualizar</button>
                   </div>
 
                   <span class="text-orange-950">categoria: {{ categorias.get(tipo.category) }}</span>
