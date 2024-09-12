@@ -174,6 +174,7 @@ function deletar() {
 
 onMounted(() => {
    busca.value = props.buscaTipo;
+   realizarBuscaTipo();
 })
 </script>
 
