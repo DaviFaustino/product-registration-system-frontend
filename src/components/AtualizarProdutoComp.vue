@@ -327,7 +327,10 @@ function deletar() {
 
 onMounted(() => {
    busca.value = props.buscaProduto.replace(/\s+/g, '');
-   realizarBuscaProduto();
+   
+   if (busca.value != '') {
+      realizarBuscaProduto();
+   }
 })
 </script>
 
