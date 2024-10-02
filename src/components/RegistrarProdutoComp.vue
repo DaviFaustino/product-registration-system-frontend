@@ -159,7 +159,7 @@ function enviarFormulario() {
    axios.post(backendURL + '/v1/products?' + 'isPriceOld=' + precoAntigo.value, dados)
       .then(response => {
          
-         codigo.value = null;
+         codigo.value = '';
          tipoProduto.nome = '';
          nome.value = '';
          descricao.value = '';
