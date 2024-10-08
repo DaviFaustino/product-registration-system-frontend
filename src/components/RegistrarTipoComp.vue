@@ -33,7 +33,7 @@ function enviarFormulario() {
             console.log('Resposta: ', response.data, 'Status: ', response.status)
             nome.value = '';
 
-            mensagemResultado.value = 'Produto salvo!';
+            mensagemResultado.value = 'Tipo salvo!';
             corMensagem.value = 'text-green-500';
 
             habilitarMostrarRestricao.value = false;
