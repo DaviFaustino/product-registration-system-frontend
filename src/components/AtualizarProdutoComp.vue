@@ -125,6 +125,12 @@ const mostrarTipos = computed(() => {
    return (tipoProduto.nome.replace(/\s+/g, '') !== '' && document.activeElement.id === 'tipo-produto') ? true : false;
 });
 
+async function atualizarMostrarTipos() {
+   await new Promise(resolve => setTimeout(resolve, 100));
+   tipoProduto.nome += ' ';
+   tipoProduto.nome = tipoProduto.nome.slice(0, -1);
+}
+
 const tiposFiltrados = computed(() => {
    let filtrados = [];
 
@@ -373,7 +379,8 @@ onMounted(() => {
                <label for="tipo-produto" class="text-orange-600 font-bold">Tipo de produto:</label>
    
                <div :class="[mostrarTipos ? 'relative' : '']">
-                  <input type="text" id="tipo-produto" v-model="tipoProduto.nome" @focus="buscarTipos" class="w-[11.4rem] sm:w-52 border-2 border-orange-400" disabled="true"></input>
+                  <input type="text" id="tipo-produto" v-model="tipoProduto.nome" @focus="buscarTipos"  @focusout="atualizarMostrarTipos"
+                        class="w-[11.4rem] sm:w-52 border-2 border-orange-400" disabled="true"></input>
    
                   <div v-if="mostrarTipos" class="absolute w-52 max-h-44 overflow-y-auto top-full bg-orange-700 bg-opacity-80 text-white">
                      <ul>

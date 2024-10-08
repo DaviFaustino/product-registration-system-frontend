@@ -43,6 +43,12 @@ const mostrarTipos = computed(() => {
    return (busca.value.replace(/\s+/g, '') !== '' && document.activeElement.id === 'tipo-produto') ? true : false;
 });
 
+async function atualizarMostrarTipos() {
+   await new Promise(resolve => setTimeout(resolve, 100));
+   busca.value += ' ';
+   busca.value = busca.value.slice(0, -1);
+}
+
 const tiposFiltrados = computed(() => {
    let filtrados = [];
 
@@ -187,7 +193,8 @@ onMounted(() => {
 
       <form @submit.prevent="realizarBuscaTipo" class="pt-8 flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2" autocomplete="off">
          <div :class="[mostrarTipos ? 'relative':'']">
-            <input type="text" id="tipo-produto" v-model="busca" @focus="buscarTipos" class="w-52 h-8 border-2 border-orange-600" placeholder="Insira a busca"></input>
+            <input type="text" id="tipo-produto" v-model="busca" @focus="buscarTipos" @focusout="atualizarMostrarTipos"
+                  class="w-52 h-8 border-2 border-orange-600" placeholder="Insira a busca"></input>
 
             <div v-if="mostrarTipos" class="absolute w-52 max-h-44 overflow-y-auto top-full bg-orange-700 bg-opacity-80 text-white">
                <ul>
